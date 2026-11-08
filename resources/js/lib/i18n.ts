@@ -216,7 +216,7 @@ const dictionary = {
             'Escolha seu ícone de perfil e atualize seu nome, @handle e endereço de e-mail',
         'settings.profile.avatar_label': 'Ícone de Perfil',
         'settings.profile.avatar_desc':
-            'Envio de fotos desativado por privacidade. Escolha um dos 11 ícones abaixo para representar sua identidade na CRIPTA:',
+            'Envio de fotos desativado por privacidade. Escolha um dos 12 ícones abaixo para representar sua identidade na CRIPTA:',
         'settings.profile.unverified': 'Seu endereço de e-mail não foi verificado.',
         'settings.profile.resend': 'Clique aqui para reenviar o e-mail de verificação.',
         'settings.profile.sent':
@@ -448,7 +448,7 @@ const dictionary = {
             'Choose your profile icon and update your name, @handle, and email address',
         'settings.profile.avatar_label': 'Profile Icon',
         'settings.profile.avatar_desc':
-            'Photo uploads are disabled for privacy. Choose one of the 11 icons below to represent your CRIPTA identity:',
+            'Photo uploads are disabled for privacy. Choose one of the 12 icons below to represent your CRIPTA identity:',
         'settings.profile.unverified': 'Your email address is unverified.',
         'settings.profile.resend': 'Click here to re-send the verification email.',
         'settings.profile.sent':

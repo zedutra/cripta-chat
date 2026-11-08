@@ -56,6 +56,7 @@ class User extends Authenticatable implements MustVerifyEmail, PasskeyUser
         'game-icons:daemon-skull',
         'game-icons:spiked-dragon-head',
         'game-icons:pegasus',
+        'game-icons:unicorn',
         'game-icons:william-tell-skull',
     ];
 
