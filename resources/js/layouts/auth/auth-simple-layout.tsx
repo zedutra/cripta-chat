@@ -15,27 +15,26 @@ export default function AuthSimpleLayout({
                 <LanguageSwitcher />
             </div>
 
-            <div className="w-full max-w-sm">
-                <div className="flex flex-col gap-8">
-                    <div className="flex flex-col items-center gap-4">
-                        <Link
-                            href={home()}
-                            className="flex items-center gap-2 font-heading text-3xl font-bold tracking-wider text-foreground"
-                        >
-                            <span>CRIPTA</span>
-                            <AppLogoIcon className="size-[1em] shrink-0 fill-current" />
-                            <span className="sr-only">{title}</span>
-                        </Link>
+            <div className="flex w-full max-w-md flex-col gap-6">
+                <Link
+                    href={home()}
+                    className="flex items-center gap-2 self-center font-heading text-4xl font-bold tracking-wider text-foreground"
+                >
+                    <span>CRIPTA</span>
+                    <AppLogoIcon className="size-[1em] shrink-0 fill-current" />
+                    <span className="sr-only">{title}</span>
+                </Link>
 
-                        <div className="w-full space-y-2 text-left">
-                            <h1 className="font-heading text-3xl font-bold tracking-wider uppercase">
-                                {title}
-                            </h1>
-                            <p className="text-left text-sm text-muted-foreground">
-                                {description}
-                            </p>
-                        </div>
+                <div className="flex flex-col gap-6 rounded-2xl border border-slate-800/20 bg-white p-6 shadow-lg sm:p-8 dark:border-slate-700 dark:bg-slate-800/90">
+                    <div className="w-full space-y-1.5 text-left">
+                        <h1 className="font-heading text-2xl font-bold tracking-wider uppercase">
+                            {title}
+                        </h1>
+                        <p className="text-left text-sm text-muted-foreground">
+                            {description}
+                        </p>
                     </div>
+
                     {children}
                 </div>
             </div>
