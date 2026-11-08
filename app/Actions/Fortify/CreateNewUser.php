@@ -36,6 +36,7 @@ class CreateNewUser implements CreatesNewUsers
         return User::create([
             'name' => $input['name'],
             'handle' => $handle,
+            'avatar_icon' => $input['avatar_icon'] ?? 'game-icons:william-tell-skull',
             'email' => $input['email'],
             'password' => $input['password'],
         ]);

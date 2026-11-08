@@ -20,6 +20,7 @@ use Laravel\Fortify\TwoFactorAuthenticatable;
  * @property int $id
  * @property string $name
  * @property string $handle
+ * @property string $avatar_icon
  * @property string $email
  * @property Carbon|null $email_verified_at
  * @property string $password
@@ -32,12 +33,31 @@ use Laravel\Fortify\TwoFactorAuthenticatable;
  * @property Carbon|null $created_at
  * @property Carbon|null $updated_at
  */
-#[Fillable(['name', 'handle', 'email', 'password', 'public_key', 'key_algorithm'])]
+#[Fillable(['name', 'handle', 'avatar_icon', 'email', 'password', 'public_key', 'key_algorithm'])]
 #[Hidden(['password', 'two_factor_secret', 'two_factor_recovery_codes', 'remember_token'])]
 class User extends Authenticatable implements MustVerifyEmail, PasskeyUser
 {
     /** @use HasFactory<UserFactory> */
     use HasFactory, Notifiable, PasskeyAuthenticatable, TwoFactorAuthenticatable;
+
+    /**
+     * Allowed profile icons from Iconify game-icons collection.
+     *
+     * @var list<string>
+     */
+    public const array AVATAR_ICONS = [
+        'game-icons:witch-face',
+        'game-icons:wizard-face',
+        'game-icons:bad-gnome',
+        'game-icons:dwarf-face',
+        'game-icons:horse-head',
+        'game-icons:cloaked-figure-on-horseback',
+        'game-icons:deathcab',
+        'game-icons:daemon-skull',
+        'game-icons:spiked-dragon-head',
+        'game-icons:pegasus',
+        'game-icons:william-tell-skull',
+    ];
 
     /**
      * Get the attributes that should be cast.

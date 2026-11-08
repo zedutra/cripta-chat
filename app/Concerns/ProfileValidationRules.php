@@ -19,6 +19,7 @@ trait ProfileValidationRules
         return [
             'name' => $this->nameRules(),
             'handle' => $this->handleRules($userId),
+            'avatar_icon' => ['nullable', 'string', Rule::in(User::AVATAR_ICONS)],
             'email' => $this->emailRules($userId),
         ];
     }

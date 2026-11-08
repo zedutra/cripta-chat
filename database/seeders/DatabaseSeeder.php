@@ -21,6 +21,7 @@ class DatabaseSeeder extends Seeder
             [
                 'name' => 'Alice Crypto',
                 'handle' => 'alice',
+                'avatar_icon' => 'game-icons:witch-face',
                 'password' => Hash::make('password'),
                 'email_verified_at' => now(),
             ],
@@ -31,6 +32,7 @@ class DatabaseSeeder extends Seeder
             [
                 'name' => 'Bob Cipher',
                 'handle' => 'bob',
+                'avatar_icon' => 'game-icons:wizard-face',
                 'password' => Hash::make('password'),
                 'email_verified_at' => now(),
             ],
