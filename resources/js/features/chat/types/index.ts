@@ -4,6 +4,7 @@ export type ChatContact = {
     id: number;
     name: string;
     handle: string;
+    avatar_icon?: string | null;
     public_key: string | null;
     key_algorithm: KeyAlgorithm | null;
 };

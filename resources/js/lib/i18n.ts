@@ -40,7 +40,7 @@ const dictionary = {
         'nav.register': 'Criar conta',
 
         // Welcome Page
-        'welcome.title': 'Bem-vindo ao CRIPTA',
+        'welcome.title': 'Bem-vindo a CRIPTA',
         'welcome.subtitle':
             'Chat com criptografia de ponta a ponta (RSA & ECC) onde você controla suas próprias chaves públicas e privadas.',
         'welcome.feature1.title': 'Zero-Knowledge Server',
@@ -146,7 +146,7 @@ const dictionary = {
             'Aguardando @{handle} configurar sua Public Key...',
         'chat.composer.encrypting': 'Criptografando...',
         'chat.composer.send': 'Criptografar & Enviar',
-        'chat.welcome.title': 'Bem-vindo ao CRIPTA',
+        'chat.welcome.title': 'Bem-vindo a CRIPTA',
         'chat.welcome.step1':
             '1. Configure ou gere seu par de chaves (RSA ou ECC) no botão do topo.',
         'chat.welcome.step2':
@@ -213,7 +213,10 @@ const dictionary = {
         'settings.nav.appearance': 'Aparência',
         'settings.profile.title': 'Perfil',
         'settings.profile.desc':
-            'Atualize seu nome, @handle e endereço de e-mail',
+            'Escolha seu ícone de perfil e atualize seu nome, @handle e endereço de e-mail',
+        'settings.profile.avatar_label': 'Ícone de Perfil',
+        'settings.profile.avatar_desc':
+            'Envio de fotos desativado por privacidade. Escolha um dos 11 ícones abaixo para representar sua identidade na CRIPTA:',
         'settings.profile.unverified': 'Seu endereço de e-mail não foi verificado.',
         'settings.profile.resend': 'Clique aqui para reenviar o e-mail de verificação.',
         'settings.profile.sent':
@@ -442,7 +445,10 @@ const dictionary = {
         'settings.nav.appearance': 'Appearance',
         'settings.profile.title': 'Profile',
         'settings.profile.desc':
-            'Update your name, @handle, and email address',
+            'Choose your profile icon and update your name, @handle, and email address',
+        'settings.profile.avatar_label': 'Profile Icon',
+        'settings.profile.avatar_desc':
+            'Photo uploads are disabled for privacy. Choose one of the 11 icons below to represent your CRIPTA identity:',
         'settings.profile.unverified': 'Your email address is unverified.',
         'settings.profile.resend': 'Click here to re-send the verification email.',
         'settings.profile.sent':

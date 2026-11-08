@@ -1,7 +1,12 @@
 import { Form, Head, Link, usePage } from '@inertiajs/react';
+import { useState } from 'react';
 import ProfileController from '@/actions/App/Http/Controllers/Settings/ProfileController';
 import DeleteUser from '@/components/delete-user';
 import Heading from '@/components/heading';
+import {
+    PROFILE_AVATAR_ICONS,
+    ProfileAvatarIcon,
+} from '@/components/icons/profile-avatar-icons';
 import InputError from '@/components/input-error';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
@@ -24,6 +29,9 @@ export default function Profile({
 }) {
     const { auth } = usePage<PageProps>().props;
     const { t } = useI18n();
+    const [selectedAvatar, setSelectedAvatar] = useState<string>(
+        auth.user.avatar_icon ?? 'game-icons:william-tell-skull',
+    );
 
     return (
         <>
@@ -47,6 +55,58 @@ export default function Profile({
                 >
                     {({ processing, errors }) => (
                         <>
+                            <div className="grid gap-3">
+                                <div>
+                                    <Label>
+                                        {t('settings.profile.avatar_label')}
+                                    </Label>
+                                    <p className="mt-0.5 text-xs text-muted-foreground">
+                                        {t('settings.profile.avatar_desc')}
+                                    </p>
+                                </div>
+
+                                <input
+                                    type="hidden"
+                                    name="avatar_icon"
+                                    value={selectedAvatar}
+                                />
+
+                                <div className="grid grid-cols-4 gap-2.5 sm:grid-cols-6">
+                                    {PROFILE_AVATAR_ICONS.map((item) => {
+                                        const isSelected =
+                                            selectedAvatar === item.id;
+                                        return (
+                                            <button
+                                                key={item.id}
+                                                type="button"
+                                                title={item.id}
+                                                onClick={() =>
+                                                    setSelectedAvatar(item.id)
+                                                }
+                                                className={`flex cursor-pointer flex-col items-center justify-center gap-1.5 rounded-xl border p-3 transition-all duration-200 ${
+                                                    isSelected
+                                                        ? 'border-slate-800 bg-slate-800 text-white shadow-sm hover:bg-slate-700 dark:border-white dark:bg-white dark:text-slate-800 dark:hover:bg-slate-200'
+                                                        : 'border-slate-800/25 bg-white text-slate-800 hover:border-slate-800 hover:bg-slate-800 hover:text-white dark:border-slate-700 dark:bg-slate-900 dark:text-white dark:hover:border-white dark:hover:bg-white dark:hover:text-slate-800'
+                                                }`}
+                                            >
+                                                <ProfileAvatarIcon
+                                                    icon={item.id}
+                                                    className="size-8 fill-current"
+                                                />
+                                                <span className="max-w-full truncate text-[10px] font-medium">
+                                                    {item.label}
+                                                </span>
+                                            </button>
+                                        );
+                                    })}
+                                </div>
+
+                                <InputError
+                                    className="mt-1"
+                                    message={errors.avatar_icon}
+                                />
+                            </div>
+
                             <div className="grid gap-2">
                                 <Label htmlFor="name">{t('auth.name')}</Label>
 

@@ -4,6 +4,7 @@ export type User = {
     id: number;
     name: string;
     handle: string;
+    avatar_icon?: string | null;
     email: string;
     public_key: string | null;
     key_algorithm: KeyAlgorithm | null;

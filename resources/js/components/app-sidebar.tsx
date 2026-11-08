@@ -3,12 +3,12 @@ import {
     AtSign,
     BookOpen,
     FolderGit2,
-    MessageSquareLock,
     UserPlus,
 } from 'lucide-react';
 import { useState } from 'react';
 import { toast } from 'sonner';
 import AppLogo from '@/components/app-logo';
+import { ProfileAvatarIcon } from '@/components/icons/profile-avatar-icons';
 import { NavFooter } from '@/components/nav-footer';
 import { NavUser } from '@/components/nav-user';
 import {
@@ -174,7 +174,10 @@ export function AppSidebar() {
                                                         : 'border border-transparent text-sidebar-foreground hover:border-white hover:bg-white hover:text-slate-800'
                                                 }`}
                                             >
-                                                <MessageSquareLock className="size-4 shrink-0" />
+                                                <ProfileAvatarIcon
+                                                    icon={contact.avatar_icon}
+                                                    className="size-5 shrink-0 fill-current"
+                                                />
                                                 <div className="flex min-w-0 flex-1 items-center justify-between gap-2">
                                                     <div className="min-w-0">
                                                         <div className="truncate font-heading text-lg leading-tight font-bold">

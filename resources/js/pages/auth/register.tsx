@@ -1,5 +1,9 @@
 import { Form, Head, setLayoutProps } from '@inertiajs/react';
-import { useEffect } from 'react';
+import { useEffect, useState } from 'react';
+import {
+    PROFILE_AVATAR_ICONS,
+    ProfileAvatarIcon,
+} from '@/components/icons/profile-avatar-icons';
 import InputError from '@/components/input-error';
 import PasswordInput from '@/components/password-input';
 import TextLink from '@/components/text-link';
@@ -17,6 +21,9 @@ type Props = {
 
 export default function Register({ passwordRules }: Props) {
     const { t, locale } = useI18n();
+    const [selectedAvatar, setSelectedAvatar] = useState<string>(
+        'game-icons:william-tell-skull',
+    );
 
     useEffect(() => {
         setLayoutProps({
@@ -37,6 +44,44 @@ export default function Register({ passwordRules }: Props) {
                 {({ processing, errors }) => (
                     <>
                         <div className="grid gap-6">
+                            <div className="grid gap-2">
+                                <Label>
+                                    {t('settings.profile.avatar_label')}
+                                </Label>
+                                <input
+                                    type="hidden"
+                                    name="avatar_icon"
+                                    value={selectedAvatar}
+                                />
+                                <div className="grid grid-cols-6 gap-1.5">
+                                    {PROFILE_AVATAR_ICONS.map((item) => {
+                                        const isSelected =
+                                            selectedAvatar === item.id;
+                                        return (
+                                            <button
+                                                key={item.id}
+                                                type="button"
+                                                title={item.id}
+                                                onClick={() =>
+                                                    setSelectedAvatar(item.id)
+                                                }
+                                                className={`flex aspect-square cursor-pointer items-center justify-center rounded-lg border p-2 transition-all duration-200 ${
+                                                    isSelected
+                                                        ? 'border-slate-800 bg-slate-800 text-white shadow-xs hover:bg-slate-700 dark:border-white dark:bg-white dark:text-slate-800 dark:hover:bg-slate-200'
+                                                        : 'border-slate-800/25 bg-white text-slate-800 hover:border-slate-800 hover:bg-slate-800 hover:text-white dark:border-slate-700 dark:bg-slate-900 dark:text-white dark:hover:border-white dark:hover:bg-white dark:hover:text-slate-800'
+                                                }`}
+                                            >
+                                                <ProfileAvatarIcon
+                                                    icon={item.id}
+                                                    className="size-6 fill-current"
+                                                />
+                                            </button>
+                                        );
+                                    })}
+                                </div>
+                                <InputError message={errors.avatar_icon} />
+                            </div>
+
                             <div className="grid gap-2">
                                 <Label htmlFor="name">{t('auth.name')}</Label>
                                 <Input

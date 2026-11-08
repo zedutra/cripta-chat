@@ -8,8 +8,8 @@ import {
 } from 'lucide-react';
 import { useEffect, useState } from 'react';
 import { toast } from 'sonner';
-import AppLogoIcon from '@/components/app-logo-icon';
 import { PadlockIcon } from '@/components/icons/padlock-icons';
+import { ProfileAvatarIcon } from '@/components/icons/profile-avatar-icons';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import {
@@ -124,7 +124,10 @@ export default function Dashboard({
                 <div className="flex flex-wrap items-center justify-between gap-4 rounded-2xl border border-slate-800/20 bg-slate-800 px-5 py-3 text-white shadow-sm dark:border-slate-700">
                     <div className="flex items-center gap-3">
                         <div className="flex size-10 items-center justify-center rounded-xl bg-white text-slate-800">
-                            <AppLogoIcon className="size-6" />
+                            <ProfileAvatarIcon
+                                icon={currentUser.avatar_icon}
+                                className="size-6 fill-current"
+                            />
                         </div>
                         <div>
                             <div className="flex items-center gap-2">
@@ -178,7 +181,10 @@ export default function Dashboard({
                             <div className="flex items-center justify-between border-b border-slate-800/15 bg-slate-800 px-5 py-3.5 text-white dark:border-slate-800">
                                 <div className="flex items-center gap-3">
                                     <div className="flex size-10 items-center justify-center rounded-xl bg-white/15">
-                                        <PadlockIcon className="size-5 text-white" />
+                                        <ProfileAvatarIcon
+                                            icon={activeContact.avatar_icon}
+                                            className="size-6 fill-current text-white"
+                                        />
                                     </div>
                                     <div>
                                         <div className="flex items-center gap-2">
