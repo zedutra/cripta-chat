@@ -132,11 +132,8 @@ export default function Dashboard({
                         <div>
                             <div className="flex items-center gap-2">
                                 <h1 className="text-2xl font-bold tracking-wide">
-                                    {currentUser.name}
-                                </h1>
-                                <span className="rounded-full bg-white/15 px-2.5 py-0.5 text-sm font-semibold text-white">
                                     @{currentUser.handle}
-                                </span>
+                                </h1>
                             </div>
                             <p className="text-xs text-slate-300">
                                 {t('chat.share_handle_prefix')}{' '}
@@ -189,11 +186,8 @@ export default function Dashboard({
                                     <div>
                                         <div className="flex items-center gap-2">
                                             <h2 className="text-2xl font-bold">
-                                                {activeContact.name}
-                                            </h2>
-                                            <span className="text-sm text-slate-300">
                                                 @{activeContact.handle}
-                                            </span>
+                                            </h2>
                                         </div>
                                         <p className="text-xs text-slate-300">
                                             {activeContact.key_algorithm

@@ -2,7 +2,6 @@ import type { KeyAlgorithm } from '@/types/auth';
 
 export type ChatContact = {
     id: number;
-    name: string;
     handle: string;
     avatar_icon?: string | null;
     public_key: string | null;

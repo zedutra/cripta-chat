@@ -181,9 +181,6 @@ export function AppSidebar() {
                                                 <div className="flex min-w-0 flex-1 items-center justify-between gap-2">
                                                     <div className="min-w-0">
                                                         <div className="truncate font-heading text-lg leading-tight font-bold">
-                                                            {contact.name}
-                                                        </div>
-                                                        <div className="truncate text-[11px] opacity-75">
                                                             @{contact.handle}
                                                         </div>
                                                     </div>

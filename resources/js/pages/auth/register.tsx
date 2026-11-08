@@ -83,24 +83,6 @@ export default function Register({ passwordRules }: Props) {
                             </div>
 
                             <div className="grid gap-2">
-                                <Label htmlFor="name">{t('auth.name')}</Label>
-                                <Input
-                                    id="name"
-                                    type="text"
-                                    required
-                                    autoFocus
-                                    tabIndex={1}
-                                    autoComplete="name"
-                                    name="name"
-                                    placeholder={t('auth.name.placeholder')}
-                                />
-                                <InputError
-                                    message={errors.name}
-                                    className="mt-2"
-                                />
-                            </div>
-
-                            <div className="grid gap-2">
                                 <Label htmlFor="handle">
                                     {t('auth.handle')}
                                 </Label>
@@ -112,7 +94,8 @@ export default function Register({ passwordRules }: Props) {
                                         id="handle"
                                         type="text"
                                         required
-                                        tabIndex={2}
+                                        autoFocus
+                                        tabIndex={1}
                                         autoComplete="username"
                                         name="handle"
                                         placeholder={t(

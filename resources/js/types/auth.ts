@@ -2,7 +2,6 @@ export type KeyAlgorithm = 'RSA' | 'ECC';
 
 export type User = {
     id: number;
-    name: string;
     handle: string;
     avatar_icon?: string | null;
     email: string;

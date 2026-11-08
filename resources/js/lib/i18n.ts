@@ -213,7 +213,7 @@ const dictionary = {
         'settings.nav.appearance': 'Aparência',
         'settings.profile.title': 'Perfil',
         'settings.profile.desc':
-            'Escolha seu ícone de perfil e atualize seu nome, @handle e endereço de e-mail',
+            'Escolha seu ícone de perfil e atualize seu @handle e endereço de e-mail',
         'settings.profile.avatar_label': 'Ícone de Perfil',
         'settings.profile.avatar_desc':
             'Envio de fotos desativado por privacidade. Escolha um dos 12 ícones abaixo para representar sua identidade na CRIPTA:',
@@ -445,7 +445,7 @@ const dictionary = {
         'settings.nav.appearance': 'Appearance',
         'settings.profile.title': 'Profile',
         'settings.profile.desc':
-            'Choose your profile icon and update your name, @handle, and email address',
+            'Choose your profile icon and update your @handle and email address',
         'settings.profile.avatar_label': 'Profile Icon',
         'settings.profile.avatar_desc':
             'Photo uploads are disabled for privacy. Choose one of the 12 icons below to represent your CRIPTA identity:',
