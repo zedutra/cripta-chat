@@ -10,6 +10,7 @@ import {
     getCiphertextPreview,
 } from '@/features/chat/lib/crypto-engine';
 import type { EncryptedMessageItem } from '@/features/chat/types';
+import { useI18n } from '@/lib/i18n';
 
 type Props = {
     message: EncryptedMessageItem;
@@ -25,6 +26,7 @@ export function EncryptedMessageBubble({
     const [isHoveringLock, setIsHoveringLock] = useState(false);
     const [decryptedText, setDecryptedText] = useState<string | null>(null);
     const [isDecrypting, setIsDecrypting] = useState(false);
+    const { t, locale } = useI18n();
 
     const isUnlocked = decryptedText !== null;
     const targetCiphertext = isOwnMessage
@@ -33,15 +35,12 @@ export function EncryptedMessageBubble({
 
     const handleToggleDecrypt = async () => {
         if (isUnlocked) {
-            // Allow locking the message back if clicked again
             setDecryptedText(null);
             return;
         }
 
         if (!privateKeyPem.trim()) {
-            toast.error(
-                'Configure ou cole sua Private Key no Gerenciador de Chaves antes de descriptografar!',
-            );
+            toast.error(t('bubble.toast.need_privkey'));
             return;
         }
 
@@ -54,16 +53,14 @@ export function EncryptedMessageBubble({
             setDecryptedText(plaintext);
         } catch (error) {
             console.error(error);
-            toast.error(
-                'Não foi possível descriptografar esta mensagem com a Private Key atual.',
-            );
+            toast.error(t('bubble.toast.decrypt_failed'));
         } finally {
             setIsDecrypting(false);
         }
     };
 
     const formattedTime = new Date(message.created_at).toLocaleTimeString(
-        'pt-BR',
+        locale === 'pt' ? 'pt-BR' : 'en-US',
         {
             hour: '2-digit',
             minute: '2-digit',
@@ -91,8 +88,8 @@ export function EncryptedMessageBubble({
                     disabled={isDecrypting}
                     title={
                         isUnlocked
-                            ? 'Mensagem descriptografada (clique para ocultar novamente)'
-                            : 'Clique no cadeado para descriptografar (Client-Side)'
+                            ? t('bubble.unlocked_title')
+                            : t('bubble.locked_title')
                     }
                     className={`mt-0.5 flex size-10 shrink-0 cursor-pointer items-center justify-center rounded-xl border transition-transform hover:scale-105 ${
                         isUnlocked
@@ -113,16 +110,20 @@ export function EncryptedMessageBubble({
 
                 <div className="min-w-0 flex-1">
                     <div className="mb-1 flex items-center justify-between gap-2 text-xs opacity-75">
-                        <span className="font-bold">
+                        <span className="font-semibold">
                             {isUnlocked
-                                ? `Descriptografada (${message.algorithm})`
-                                : `Criptografada (${message.algorithm}) — Clique no cadeado`}
+                                ? t('bubble.status.unlocked', {
+                                      alg: message.algorithm,
+                                  })
+                                : t('bubble.status.locked', {
+                                      alg: message.algorithm,
+                                  })}
                         </span>
                         <span>{formattedTime}</span>
                     </div>
 
                     {isUnlocked ? (
-                        <p className="text-lg leading-relaxed break-words whitespace-pre-wrap">
+                        <p className="text-sm leading-relaxed break-words whitespace-pre-wrap">
                             {decryptedText}
                         </p>
                     ) : (

@@ -21,6 +21,7 @@ import {
     loadLocalPrivateKey,
 } from '@/features/chat';
 import type { ChatContact, EncryptedMessageItem } from '@/features/chat';
+import { useI18n } from '@/lib/i18n';
 import { dashboard } from '@/routes';
 import type { Auth } from '@/types/auth';
 
@@ -37,6 +38,7 @@ export default function Dashboard({
 }: Props) {
     const { auth } = usePage<{ auth: Auth }>().props;
     const currentUser = auth.user;
+    const { t } = useI18n();
 
     const [privateKeyPem, setPrivateKeyPem] = useState<string>('');
     const [handleSearch, setHandleSearch] = useState<string>('');
@@ -70,8 +72,7 @@ export default function Dashboard({
                 onError: (errors) => {
                     setIsAddingContact(false);
                     toast.error(
-                        errors.handle ??
-                            'Não foi possível encontrar este @handle.',
+                        errors.handle ?? t('chat.toast.handle_not_found'),
                     );
                 },
             },
@@ -94,15 +95,15 @@ export default function Dashboard({
         }
 
         if (!currentUser.public_key || !currentUser.key_algorithm) {
-            toast.error(
-                'Configure primeiro suas chaves E2EE (RSA ou ECC) no topo da página antes de enviar mensagens!',
-            );
+            toast.error(t('chat.toast.configure_first'));
             return;
         }
 
         if (!activeContact.public_key || !activeContact.key_algorithm) {
             toast.error(
-                `O contato @${activeContact.handle} ainda não publicou uma Public Key para receber mensagens criptografadas.`,
+                t('chat.toast.recipient_no_key', {
+                    handle: activeContact.handle,
+                }),
             );
             return;
         }
@@ -111,14 +112,12 @@ export default function Dashboard({
         try {
             const plaintext = messageText.trim();
 
-            // Encrypt for recipient using recipient's public key & algorithm
             const recipientCiphertext = await encryptForPublicKey(
                 activeContact.key_algorithm,
                 activeContact.public_key,
                 plaintext,
             );
 
-            // Encrypt copy for sender using sender's own public key & algorithm so sender can also unlock it later
             const senderCiphertext = await encryptForPublicKey(
                 currentUser.key_algorithm,
                 currentUser.public_key,
@@ -141,18 +140,14 @@ export default function Dashboard({
                     },
                     onError: () => {
                         setIsSending(false);
-                        toast.error(
-                            'Erro ao enviar a mensagem criptografada.',
-                        );
+                        toast.error(t('chat.toast.send_error'));
                     },
                 },
             );
         } catch (error) {
             console.error(error);
             setIsSending(false);
-            toast.error(
-                'Falha ao criptografar a mensagem no navegador. Verifique as chaves públicas.',
-            );
+            toast.error(t('chat.toast.encrypt_error'));
         }
     };
 
@@ -169,17 +164,17 @@ export default function Dashboard({
                         </div>
                         <div>
                             <div className="flex items-center gap-2">
-                                <span className="text-xl font-bold tracking-wide">
+                                <h1 className="text-2xl font-bold tracking-wide">
                                     {currentUser.name}
-                                </span>
-                                <span className="rounded-full bg-white/15 px-2.5 py-0.5 text-sm font-bold text-white">
+                                </h1>
+                                <span className="rounded-full bg-white/15 px-2.5 py-0.5 text-sm font-semibold text-white">
                                     @{currentUser.handle}
                                 </span>
                             </div>
                             <p className="text-xs text-slate-300">
-                                Compartilhe seu{' '}
-                                <strong>@{currentUser.handle}</strong> para
-                                adicionarem você no CRIPTA
+                                {t('chat.share_handle_prefix')}{' '}
+                                <strong>@{currentUser.handle}</strong>{' '}
+                                {t('chat.share_handle_suffix')}
                             </p>
                         </div>
                     </div>
@@ -190,16 +185,15 @@ export default function Dashboard({
                                 <>
                                     <CheckCircle2 className="size-4 text-emerald-400" />
                                     <span>
-                                        E2EE Ativo ({currentUser.key_algorithm})
-                                        — Private Key no Cliente
+                                        {t('chat.status.active')} (
+                                        {currentUser.key_algorithm}) —{' '}
+                                        {t('chat.status.client_key')}
                                     </span>
                                 </>
                             ) : (
                                 <>
                                     <ShieldAlert className="size-4 text-amber-300" />
-                                    <span>
-                                        Chaves E2EE pendentes neste navegador
-                                    </span>
+                                    <span>{t('chat.status.pending')}</span>
                                 </>
                             )}
                         </div>
@@ -223,9 +217,9 @@ export default function Dashboard({
                             >
                                 <label
                                     htmlFor="add-handle-input"
-                                    className="text-sm font-bold text-slate-800 dark:text-white"
+                                    className="text-sm font-semibold text-slate-800 dark:text-white"
                                 >
-                                    Adicionar pessoa pelo @
+                                    {t('chat.add_contact.label')}
                                 </label>
                                 <div className="flex gap-2">
                                     <div className="relative flex-1">
@@ -237,7 +231,9 @@ export default function Dashboard({
                                             onChange={(e) =>
                                                 setHandleSearch(e.target.value)
                                             }
-                                            placeholder="usuario_destino"
+                                            placeholder={t(
+                                                'chat.add_contact.placeholder',
+                                            )}
                                             className="pl-8"
                                         />
                                     </div>
@@ -247,24 +243,22 @@ export default function Dashboard({
                                         className="gap-1.5 bg-slate-800 text-white hover:bg-slate-700 dark:bg-white dark:text-slate-800"
                                     >
                                         <UserPlus className="size-4" />
-                                        Adicionar
+                                        {t('chat.add_contact.button')}
                                     </Button>
                                 </div>
                             </form>
                         </div>
 
                         <div className="flex-1 overflow-y-auto p-3">
-                            <div className="mb-2 px-2 text-xs font-bold tracking-wider text-slate-500 uppercase">
-                                Conversas ({contacts.length})
+                            <div className="mb-2 px-2 text-xs font-semibold tracking-wider text-slate-500 uppercase">
+                                {t('chat.conversations')} ({contacts.length})
                             </div>
 
                             {contacts.length === 0 ? (
                                 <div className="flex flex-col items-center justify-center px-4 py-10 text-center text-slate-500">
                                     <AtSign className="mb-2 size-8 opacity-50" />
-                                    <p className="text-base">
-                                        Nenhum contato ainda. Digite o{' '}
-                                        <strong>@</strong> de alguém acima para
-                                        iniciar um chat criptografado!
+                                    <p className="text-sm">
+                                        {t('chat.no_contacts')}
                                     </p>
                                 </div>
                             ) : (
@@ -284,11 +278,11 @@ export default function Dashboard({
                                                 className={`flex w-full items-center justify-between rounded-xl px-3.5 py-3 text-left transition ${
                                                     isSelected
                                                         ? 'bg-slate-800 text-white shadow-sm dark:bg-white dark:text-slate-800'
-                                                        : 'hover:bg-slate-100 text-slate-800 dark:text-white dark:hover:bg-slate-800'
+                                                        : 'text-slate-800 hover:bg-slate-100 dark:text-white dark:hover:bg-slate-800'
                                                 }`}
                                             >
                                                 <div className="min-w-0">
-                                                    <div className="truncate text-lg font-bold">
+                                                    <div className="truncate font-heading text-xl font-bold">
                                                         {contact.name}
                                                     </div>
                                                     <div className="truncate text-xs opacity-75">
@@ -298,7 +292,7 @@ export default function Dashboard({
 
                                                 {contact.key_algorithm ? (
                                                     <span
-                                                        className={`rounded-md border px-2 py-0.5 text-xs font-bold ${
+                                                        className={`rounded-md border px-2 py-0.5 text-xs font-semibold ${
                                                             isSelected
                                                                 ? 'border-white/30 bg-white/10 text-white dark:border-slate-800/30 dark:text-slate-800'
                                                                 : 'border-slate-800/20 bg-slate-100 text-slate-800 dark:border-slate-700 dark:bg-slate-800 dark:text-white'
@@ -308,7 +302,7 @@ export default function Dashboard({
                                                     </span>
                                                 ) : (
                                                     <span className="text-xs opacity-60">
-                                                        Sem chave
+                                                        {t('chat.no_key')}
                                                     </span>
                                                 )}
                                             </button>
@@ -331,7 +325,7 @@ export default function Dashboard({
                                         </div>
                                         <div>
                                             <div className="flex items-center gap-2">
-                                                <h2 className="text-xl font-bold">
+                                                <h2 className="text-2xl font-bold">
                                                     {activeContact.name}
                                                 </h2>
                                                 <span className="text-sm text-slate-300">
@@ -340,14 +334,21 @@ export default function Dashboard({
                                             </div>
                                             <p className="text-xs text-slate-300">
                                                 {activeContact.key_algorithm
-                                                    ? `Criptografia Ponta a Ponta (${activeContact.key_algorithm}) — Clique no cadeado de cada mensagem para descriptografar`
-                                                    : 'Este usuário ainda não configurou uma Public Key'}
+                                                    ? t(
+                                                          'chat.header.e2ee_info',
+                                                          {
+                                                              alg: activeContact.key_algorithm,
+                                                          },
+                                                      )
+                                                    : t(
+                                                          'chat.header.no_pubkey',
+                                                      )}
                                             </p>
                                         </div>
                                     </div>
 
                                     {activeContact.key_algorithm && (
-                                        <div className="hidden items-center gap-1.5 rounded-lg border border-white/20 bg-white/10 px-3 py-1 text-xs font-bold sm:flex">
+                                        <div className="hidden items-center gap-1.5 rounded-lg border border-white/20 bg-white/10 px-3 py-1 text-xs font-semibold sm:flex">
                                             <KeyRound className="size-3.5" />
                                             Public Key:{' '}
                                             {activeContact.key_algorithm}
@@ -360,18 +361,13 @@ export default function Dashboard({
                                     {messages.length === 0 ? (
                                         <div className="flex h-full flex-col items-center justify-center text-center text-slate-500">
                                             <PadlockIcon className="mb-3 size-12 opacity-40" />
-                                            <p className="text-lg font-bold">
-                                                Nenhuma mensagem criptografada
-                                                ainda
-                                            </p>
+                                            <h3 className="text-2xl font-bold">
+                                                {t('chat.empty.title')}
+                                            </h3>
                                             <p className="max-w-md text-sm">
-                                                Envie uma mensagem abaixo. Ela
-                                                será criptografada no seu
-                                                navegador com a chave pública de{' '}
-                                                <strong>
-                                                    @{activeContact.handle}
-                                                </strong>
-                                                .
+                                                {t('chat.empty.desc', {
+                                                    handle: activeContact.handle,
+                                                })}
                                             </p>
                                         </div>
                                     ) : (
@@ -401,15 +397,27 @@ export default function Dashboard({
                                             setMessageText(e.target.value)
                                         }
                                         placeholder={
-                                            activeContact.public_key
-                                                ? `Escreva uma mensagem para @${activeContact.handle} (será criptografada via ${activeContact.key_algorithm})...`
-                                                : `Aguardando @${activeContact.handle} configurar sua Public Key...`
+                                            activeContact.public_key &&
+                                            activeContact.key_algorithm
+                                                ? t(
+                                                      'chat.composer.placeholder',
+                                                      {
+                                                          handle: activeContact.handle,
+                                                          alg: activeContact.key_algorithm,
+                                                      },
+                                                  )
+                                                : t(
+                                                      'chat.composer.waiting_key',
+                                                      {
+                                                          handle: activeContact.handle,
+                                                      },
+                                                  )
                                         }
                                         disabled={
                                             !activeContact.public_key ||
                                             isSending
                                         }
-                                        className="flex-1 text-base"
+                                        className="flex-1 text-sm"
                                     />
                                     <Button
                                         type="submit"
@@ -422,8 +430,8 @@ export default function Dashboard({
                                     >
                                         <Send className="size-4" />
                                         {isSending
-                                            ? 'Criptografando...'
-                                            : 'Criptografar & Enviar'}
+                                            ? t('chat.composer.encrypting')
+                                            : t('chat.composer.send')}
                                     </Button>
                                 </form>
                             </>
@@ -432,20 +440,14 @@ export default function Dashboard({
                                 <div className="mb-4 flex size-16 items-center justify-center rounded-2xl bg-slate-800 text-white">
                                     <Lock className="size-8" />
                                 </div>
-                                <h3 className="text-2xl font-bold text-slate-800 dark:text-white">
-                                    Bem-vindo ao CRIPTA
+                                <h3 className="text-3xl font-bold text-slate-800 dark:text-white">
+                                    {t('chat.welcome.title')}
                                 </h3>
-                                <p className="mt-2 max-w-md text-base">
-                                    1. Configure ou gere seu par de chaves (
-                                    <strong>RSA</strong> ou <strong>ECC</strong>
-                                    ) no botão do topo.
-                                    <br />
-                                    2. Adicione um contato pelo{' '}
-                                    <strong>@handle</strong> na barra lateral.
-                                    <br />
-                                    3. Clique no cadeado das mensagens para
-                                    descriptografar localmente!
-                                </p>
+                                <div className="mt-3 max-w-md space-y-1 text-sm">
+                                    <p>{t('chat.welcome.step1')}</p>
+                                    <p>{t('chat.welcome.step2')}</p>
+                                    <p>{t('chat.welcome.step3')}</p>
+                                </div>
                             </div>
                         )}
                     </div>

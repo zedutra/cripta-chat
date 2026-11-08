@@ -1,5 +1,11 @@
 import { router } from '@inertiajs/react';
-import { Download, KeyRound, ShieldCheck, Sparkles, Upload } from 'lucide-react';
+import {
+    Download,
+    KeyRound,
+    ShieldCheck,
+    Sparkles,
+    Upload,
+} from 'lucide-react';
 import { useState } from 'react';
 import { toast } from 'sonner';
 import { Button } from '@/components/ui/button';
@@ -18,6 +24,7 @@ import {
     saveLocalPrivateKey,
     validateKeyPair,
 } from '@/features/chat/lib/crypto-engine';
+import { useI18n } from '@/lib/i18n';
 import type { KeyAlgorithm, User } from '@/types/auth';
 
 type Props = {
@@ -42,6 +49,7 @@ export function KeyManagerModal({
         useState<string>(privateKeyPem);
     const [isGenerating, setIsGenerating] = useState(false);
     const [isSaving, setIsSaving] = useState(false);
+    const { t } = useI18n();
 
     const handleGenerateKeys = async () => {
         setIsGenerating(true);
@@ -49,12 +57,10 @@ export function KeyManagerModal({
             const pair = await generateClientKeyPair(algorithm);
             setPublicKeyInput(pair.publicKeyPem);
             setPrivateKeyInput(pair.privateKeyPem);
-            toast.success(
-                `Par de chaves ${algorithm} gerado no seu navegador!`,
-            );
+            toast.success(t('keys.toast.generated', { alg: algorithm }));
         } catch (error) {
             console.error(error);
-            toast.error('Falha ao gerar o par de chaves via Web Crypto API.');
+            toast.error(t('keys.toast.generate_error'));
         } finally {
             setIsGenerating(false);
         }
@@ -62,7 +68,7 @@ export function KeyManagerModal({
 
     const handleDownloadKeys = () => {
         if (!publicKeyInput || !privateKeyInput) {
-            toast.error('Preencha ou gere as chaves antes de baixar.');
+            toast.error(t('keys.toast.fill_before_download'));
             return;
         }
 
@@ -87,9 +93,7 @@ export function KeyManagerModal({
 
     const handleSaveAndPublish = async () => {
         if (!publicKeyInput.trim() || !privateKeyInput.trim()) {
-            toast.error(
-                'Informe tanto a Public Key quanto a sua Private Key.',
-            );
+            toast.error(t('keys.toast.fill_both'));
             return;
         }
 
@@ -99,17 +103,13 @@ export function KeyManagerModal({
         } catch (error) {
             console.error(error);
             setIsSaving(false);
-            toast.error(
-                `As chaves informadas não são válidas para o algoritmo ${algorithm}. Verifique o formato PEM.`,
-            );
+            toast.error(t('keys.toast.invalid_pair', { alg: algorithm }));
             return;
         }
 
-        // Save Private Key strictly on client side (never sent to backend)
         saveLocalPrivateKey(user.id, privateKeyInput);
         onPrivateKeyChange(privateKeyInput.trim());
 
-        // Send ONLY Public Key and algorithm to the server
         router.put(
             '/chat/keys',
             {
@@ -143,9 +143,11 @@ export function KeyManagerModal({
                     className="gap-2 border-slate-800 bg-slate-800 text-white hover:bg-slate-700 dark:border-white dark:bg-white dark:text-slate-800"
                 >
                     <KeyRound className="size-4" />
-                    {hasConfiguredKeys
-                        ? `Chaves E2EE (${user.key_algorithm})`
-                        : 'Configurar Chaves (RSA / ECC)'}
+                    {hasConfiguredKeys && user.key_algorithm
+                        ? t('keys.button.configured', {
+                              alg: user.key_algorithm,
+                          })
+                        : t('keys.button.setup')}
                 </Button>
             </DialogTrigger>
 
@@ -153,28 +155,24 @@ export function KeyManagerModal({
                 <DialogHeader>
                     <DialogTitle className="flex items-center gap-2 text-2xl">
                         <ShieldCheck className="size-6" />
-                        Gerenciador de Chaves E2EE (RSA & ECC)
+                        {t('keys.modal.title')}
                     </DialogTitle>
-                    <DialogDescription className="text-base">
-                        Você pode <strong>gerar</strong> um novo par de chaves ou{' '}
-                        <strong>colar suas próprias chaves</strong>. O servidor
-                        armazena apenas a sua <strong>Public Key</strong>. Sua{' '}
-                        <strong>Private Key</strong> fica exclusivamente no seu
-                        navegador para descriptografia client-side.
+                    <DialogDescription className="text-sm">
+                        {t('keys.modal.desc')}
                     </DialogDescription>
                 </DialogHeader>
 
                 <div className="grid gap-4 py-2">
                     <div className="flex flex-wrap items-center justify-between gap-3 rounded-lg border border-slate-300 bg-slate-100 p-3 dark:border-slate-700 dark:bg-slate-900">
                         <div className="flex items-center gap-2">
-                            <Label className="text-base font-bold">
-                                Algoritmo:
+                            <Label className="text-sm font-semibold">
+                                {t('keys.algorithm')}
                             </Label>
                             <div className="inline-flex rounded-md border border-slate-800 p-0.5 dark:border-white">
                                 <button
                                     type="button"
                                     onClick={() => setAlgorithm('RSA')}
-                                    className={`rounded px-3 py-1 text-sm font-bold transition ${
+                                    className={`rounded px-3 py-1 text-xs font-semibold transition ${
                                         algorithm === 'RSA'
                                             ? 'bg-slate-800 text-white dark:bg-white dark:text-slate-800'
                                             : 'text-slate-800 dark:text-white'
@@ -185,7 +183,7 @@ export function KeyManagerModal({
                                 <button
                                     type="button"
                                     onClick={() => setAlgorithm('ECC')}
-                                    className={`rounded px-3 py-1 text-sm font-bold transition ${
+                                    className={`rounded px-3 py-1 text-xs font-semibold transition ${
                                         algorithm === 'ECC'
                                             ? 'bg-slate-800 text-white dark:bg-white dark:text-slate-800'
                                             : 'text-slate-800 dark:text-white'
@@ -203,12 +201,14 @@ export function KeyManagerModal({
                                 size="sm"
                                 onClick={handleGenerateKeys}
                                 disabled={isGenerating}
-                                className="gap-1.5 border border-slate-800 font-bold"
+                                className="gap-1.5 border border-slate-800 font-semibold"
                             >
                                 <Sparkles className="size-4" />
                                 {isGenerating
-                                    ? 'Gerando...'
-                                    : `Gerar Par ${algorithm}`}
+                                    ? t('keys.generating')
+                                    : t('keys.generate_btn', {
+                                          alg: algorithm,
+                                      })}
                             </Button>
 
                             <Button
@@ -219,14 +219,17 @@ export function KeyManagerModal({
                                 className="gap-1.5"
                             >
                                 <Download className="size-4" />
-                                Baixar .PEM
+                                {t('keys.download_pem')}
                             </Button>
                         </div>
                     </div>
 
                     <div className="grid gap-2">
-                        <Label htmlFor="public_key_pem" className="text-base font-bold">
-                            Public Key (Enviada ao servidor para que contatos criptografem mensagens para você)
+                        <Label
+                            htmlFor="public_key_pem"
+                            className="text-sm font-semibold"
+                        >
+                            {t('keys.pubkey_label')}
                         </Label>
                         <textarea
                             id="public_key_pem"
@@ -239,8 +242,11 @@ export function KeyManagerModal({
                     </div>
 
                     <div className="grid gap-2">
-                        <Label htmlFor="private_key_pem" className="text-base font-bold">
-                            Private Key (NUNCA enviada ao servidor — usada apenas no cliente para abrir os cadeados)
+                        <Label
+                            htmlFor="private_key_pem"
+                            className="text-sm font-semibold"
+                        >
+                            {t('keys.privkey_label')}
                         </Label>
                         <textarea
                             id="private_key_pem"
@@ -261,9 +267,7 @@ export function KeyManagerModal({
                         className="w-full gap-2 bg-slate-800 text-white hover:bg-slate-700 sm:w-auto dark:bg-white dark:text-slate-800"
                     >
                         <Upload className="size-4" />
-                        {isSaving
-                            ? 'Validando e Salvando...'
-                            : 'Publicar Public Key & Guardar Private Key Localmente'}
+                        {isSaving ? t('keys.saving') : t('keys.save_btn')}
                     </Button>
                 </DialogFooter>
             </DialogContent>
