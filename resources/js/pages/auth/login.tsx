@@ -33,12 +33,6 @@ export default function Login({ status, canResetPassword }: Props) {
         <>
             <Head title={t('auth.login.button')} />
 
-            <PasskeyVerify
-                label={t('auth.passkey.signin')}
-                loadingLabel={t('auth.passkey.authenticating')}
-                separator={t('auth.passkey.or_email')}
-            />
-
             <Form
                 {...store.form()}
                 resetOnSuccess={['password']}
@@ -99,16 +93,26 @@ export default function Login({ status, canResetPassword }: Props) {
                                 </Label>
                             </div>
 
-                            <Button
-                                type="submit"
-                                className="mt-4 w-full"
-                                tabIndex={4}
-                                disabled={processing}
-                                data-test="login-button"
-                            >
-                                {processing && <Spinner />}
-                                {t('auth.login.button')}
-                            </Button>
+                            <div className="grid gap-3 pt-2">
+                                <Button
+                                    type="submit"
+                                    className="w-full"
+                                    tabIndex={4}
+                                    disabled={processing}
+                                    data-test="login-button"
+                                >
+                                    {processing && <Spinner />}
+                                    {t('auth.login.button')}
+                                </Button>
+
+                                <PasskeyVerify
+                                    label={t('auth.passkey.signin')}
+                                    loadingLabel={t(
+                                        'auth.passkey.authenticating',
+                                    )}
+                                    separator={t('auth.passkey.or_email')}
+                                />
+                            </div>
                         </div>
 
                         <div className="text-center text-sm text-muted-foreground">
@@ -132,5 +136,5 @@ export default function Login({ status, canResetPassword }: Props) {
 
 Login.layout = {
     title: 'Entrar na sua conta',
-    description: 'Digite seu e-mail e senha abaixo para acessar o CRIPTA',
+    description: 'Digite seu e-mail e senha abaixo para acessar a CRIPTA',
 };

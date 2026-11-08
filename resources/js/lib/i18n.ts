@@ -58,7 +58,7 @@ const dictionary = {
         // Auth - Login
         'auth.login.title': 'Entrar na sua conta',
         'auth.login.description':
-            'Digite seu e-mail e senha abaixo para acessar o CRIPTA',
+            'Digite seu e-mail e senha abaixo para acessar a CRIPTA',
         'auth.email': 'Endereço de e-mail',
         'auth.email.placeholder': 'seu@email.com',
         'auth.password': 'Senha',
@@ -70,12 +70,12 @@ const dictionary = {
         'auth.signup_link': 'Cadastre-se',
         'auth.passkey.signin': 'Entrar com Passkey',
         'auth.passkey.authenticating': 'Autenticando...',
-        'auth.passkey.or_email': 'Ou continue com e-mail',
+        'auth.passkey.or_email': 'Ou',
 
         // Auth - Register
         'auth.register.title': 'Criar uma conta',
         'auth.register.description':
-            'Preencha seus dados abaixo para criar sua identidade no CRIPTA',
+            'Escolha seu ícone e preencha seus dados abaixo para criar sua identidade na CRIPTA',
         'auth.name': 'Nome completo',
         'auth.name.placeholder': 'Seu nome',
         'auth.handle': ' Seu @ (Identificador único para contatos)',
@@ -305,12 +305,12 @@ const dictionary = {
         'auth.signup_link': 'Sign up',
         'auth.passkey.signin': 'Sign in with a passkey',
         'auth.passkey.authenticating': 'Authenticating...',
-        'auth.passkey.or_email': 'Or continue with email',
+        'auth.passkey.or_email': 'Or',
 
         // Auth - Register
         'auth.register.title': 'Create an account',
         'auth.register.description':
-            'Enter your details below to create your CRIPTA identity',
+            'Choose your icon and enter your details below to create your CRIPTA identity',
         'auth.name': 'Full name',
         'auth.name.placeholder': 'Full name',
         'auth.handle': 'Your @ (Unique handle for contacts)',

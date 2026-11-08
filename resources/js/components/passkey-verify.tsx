@@ -40,7 +40,20 @@ export default function PasskeyVerify({
     }
 
     return (
-        <>
+        <div className="grid gap-3">
+            {separator && (
+                <div className="relative my-1">
+                    <div className="absolute inset-0 flex items-center">
+                        <Separator className="w-full" />
+                    </div>
+                    <div className="relative flex justify-center text-xs uppercase">
+                        <span className="bg-background px-2 text-muted-foreground">
+                            {separator}
+                        </span>
+                    </div>
+                </div>
+            )}
+
             <div className="grid gap-2">
                 <Button
                     type="button"
@@ -58,17 +71,6 @@ export default function PasskeyVerify({
                     <InputError message={error} className="text-center" />
                 )}
             </div>
-
-            <div className="relative my-6">
-                <div className="absolute inset-0 flex items-center">
-                    <Separator className="w-full" />
-                </div>
-                <div className="relative flex justify-center text-xs uppercase">
-                    <span className="bg-background px-2 text-muted-foreground">
-                        {separator ?? 'Or continue with email'}
-                    </span>
-                </div>
-            </div>
-        </>
+        </div>
     );
 }
