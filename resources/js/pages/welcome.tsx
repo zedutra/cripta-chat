@@ -46,7 +46,7 @@ export default function Welcome() {
 
                 <main className="grid w-full max-w-4xl grid-cols-1 overflow-hidden rounded-2xl border border-slate-800/20 bg-white shadow-lg lg:grid-cols-12 dark:border-slate-700 dark:bg-slate-800">
                     <div className="flex flex-col justify-center p-8 lg:col-span-7 lg:p-12">
-                        <h1 className="mb-3 flex flex-wrap items-center gap-2.5 font-heading text-4xl font-bold tracking-wide lg:text-5xl">
+                        <h1 className="mb-3 flex items-center gap-2 font-heading text-2xl font-bold tracking-wide whitespace-nowrap sm:text-3xl lg:text-4xl">
                             <span>{t('welcome.title')}</span>
                             <AppLogoIcon className="size-[1em] shrink-0 fill-current" />
                         </h1>
