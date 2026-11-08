@@ -68,7 +68,7 @@ export default function Welcome() {
                                     <ShieldCheck className="size-5" />
                                 </div>
                                 <div>
-                                    <h3 className="font-heading text-xl font-bold">
+                                    <h3 className="font-sans text-base font-bold tracking-normal">
                                         {t('welcome.feature1.title')}
                                     </h3>
                                     <p className="text-sm text-slate-600 dark:text-slate-300">
@@ -82,7 +82,7 @@ export default function Welcome() {
                                     <KeyRound className="size-5" />
                                 </div>
                                 <div>
-                                    <h3 className="font-heading text-xl font-bold">
+                                    <h3 className="font-sans text-base font-bold tracking-normal">
                                         {t('welcome.feature2.title')}
                                     </h3>
                                     <p className="text-sm text-slate-600 dark:text-slate-300">
@@ -96,7 +96,7 @@ export default function Welcome() {
                                     <PadlockIcon className="size-5" />
                                 </div>
                                 <div>
-                                    <h3 className="font-heading text-xl font-bold">
+                                    <h3 className="font-sans text-base font-bold tracking-normal">
                                         {t('welcome.feature3.title')}
                                     </h3>
                                     <p className="text-sm text-slate-600 dark:text-slate-300">
