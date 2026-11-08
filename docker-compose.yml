@@ -19,6 +19,24 @@ services:
       mailhog:
         condition: service_started
 
+  node:
+    image: node:22
+    container_name: cripta_node
+    restart: unless-stopped
+    working_dir: /var/www
+    environment:
+      SKIP_WAYFINDER: "true"
+    command: sh -c "npm install && npx vp dev --host 0.0.0.0 --port 5173"
+    ports:
+      - "${VITE_PORT:-5173}:5173"
+    volumes:
+      - ./:/var/www
+      - cripta_node_modules:/var/www/node_modules
+    networks:
+      - cripta_network
+    depends_on:
+      - app
+
   nginx:
     image: nginx:alpine
     container_name: cripta_nginx
@@ -104,4 +122,6 @@ volumes:
   cripta_mysql_data:
     driver: local
   cripta_redis_data:
+    driver: local
+  cripta_node_modules:
     driver: local

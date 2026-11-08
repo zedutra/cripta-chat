@@ -26,10 +26,21 @@ export default defineConfig({
         tailwindcss(),
         wayfinder({
             formVariants: true,
+            command: process.env.SKIP_WAYFINDER
+                ? 'echo "Wayfinder skipped in node container"'
+                : 'php artisan wayfinder:generate',
         }),
     ]),
     server: {
+        host: '0.0.0.0',
+        port: 5173,
+        strictPort: true,
+        hmr: {
+            host: 'localhost',
+            port: 5173,
+        },
         watch: {
+            usePolling: true,
             ignored: [
                 '**/.agents/**',
                 '**/.claude/**',
