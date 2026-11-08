@@ -14,12 +14,7 @@ export default function Welcome() {
         <>
             <Head title={t('welcome.title')} />
             <div className="flex min-h-screen flex-col items-center bg-white p-6 text-slate-800 lg:justify-center lg:p-8 dark:bg-slate-900 dark:text-white">
-                <header className="mb-8 flex w-full max-w-4xl items-center justify-between text-sm">
-                    <div className="flex items-center gap-2 font-heading text-3xl font-bold tracking-wider">
-                        <span>CRIPTA</span>
-                        <AppLogoIcon className="size-[1em] shrink-0 fill-current" />
-                    </div>
-
+                <header className="mb-8 flex w-full max-w-4xl items-center justify-end text-sm">
                     <nav className="flex items-center gap-3">
                         <LanguageSwitcher />
 
@@ -51,8 +46,9 @@ export default function Welcome() {
 
                 <main className="grid w-full max-w-4xl grid-cols-1 overflow-hidden rounded-2xl border border-slate-800/20 bg-white shadow-lg lg:grid-cols-12 dark:border-slate-700 dark:bg-slate-800">
                     <div className="flex flex-col justify-center p-8 lg:col-span-7 lg:p-12">
-                        <h1 className="mb-3 font-heading text-4xl font-bold tracking-wide lg:text-5xl">
-                            {t('welcome.title')}
+                        <h1 className="mb-3 flex flex-wrap items-center gap-2.5 font-heading text-4xl font-bold tracking-wide lg:text-5xl">
+                            <span>{t('welcome.title')}</span>
+                            <AppLogoIcon className="size-[1em] shrink-0 fill-current" />
                         </h1>
                         <p className="mb-6 text-base text-slate-600 dark:text-slate-300">
                             {t('welcome.subtitle')}
