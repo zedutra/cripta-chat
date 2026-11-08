@@ -1,10 +1,31 @@
 # Arquitetura do Sistema CRIPTA
 
-Este documento define os padrões arquiteturais e a organização de diretórios do sistema **CRIPTA** (Laravel 13 + React 19 + Inertia.js v3 + Tailwind CSS v4).
+Este documento define os padrões arquiteturais, especificações funcionais e a organização de diretórios do sistema **CRIPTA** — um sistema de chat com criptografia de ponta a ponta (E2EE) onde o próprio usuário gerencia suas chaves (**RSA** e **ECC**).
 
 ---
 
-## 1. Visão Geral da Stack
+## 1. Visão Geral & Diferenciais do Produto
+
+- **Criptografia de Ponta a Ponta (E2EE) com Chaves do Usuário**:
+  - Suporte aos algoritmos **RSA** (`RSA-OAEP`) e **ECC** (`ECDH` + `AES-GCM`).
+  - O usuário pode **gerar** seu par de chaves (`Public Key` e `Private Key`) diretamente no navegador ou **importar/colar** suas próprias chaves.
+  - **Zero-Knowledge Server**: O servidor armazena **apenas a Public Key** do usuário. Nenhuma `Private Key` trafega ou é salva no servidor.
+  - **Descriptografia 100% Client-Side**: Toda criptografia e descriptografia ocorre no navegador via Web Crypto API.
+- **Identidade por `@` (Handle)**:
+  - Cada usuário possui um `@username` único utilizado para adicionar contatos e iniciar conversas seguras.
+- **UX de Desbloqueio de Mensagens**:
+  - Ao abrir uma conversa, as mensagens aparecem criptografadas acompanhadas de um cadeado interativo:
+    - Mensagem criptografada: `game-icons:padlock` ([`PadlockIcon`](file:///c:/Users/zedut/Desktop/Projeto/cripta/resources/js/components/icons/padlock-icons.tsx))
+    - Mouse sobre o cadeado (*hover*): `game-icons:unlocking` ([`UnlockingIcon`](file:///c:/Users/zedut/Desktop/Projeto/cripta/resources/js/components/icons/padlock-icons.tsx))
+    - Mensagem descriptografada (após o clique): `game-icons:padlock-open` ([`PadlockOpenIcon`](file:///c:/Users/zedut/Desktop/Projeto/cripta/resources/js/components/icons/padlock-icons.tsx))
+- **Identidade Visual**:
+  - **Tipografia**: `Shadows Into Light` (principal) e `Permanent Marker` (destaques).
+  - **Paleta de Cores**: Principal `slate-800` (`#1e293b`) e Secundária `white` (`#ffffff`).
+  - **Logo**: Palavra `CRIPTA` seguida do ícone `game-icons:william-tell-skull` ([`AppLogo`](file:///c:/Users/zedut/Desktop/Projeto/cripta/resources/js/components/app-logo.tsx) / [`AppLogoIcon`](file:///c:/Users/zedut/Desktop/Projeto/cripta/resources/js/components/app-logo-icon.tsx)).
+
+---
+
+## 2. Visão Geral da Stack
 
 - **Backend**: PHP 8.3+, Laravel 13, Laravel Fortify + Passkeys, Laravel Wayfinder
 - **Frontend**: React 19 (com React Compiler), TypeScript, Inertia.js v3, Tailwind CSS v4, Radix UI
