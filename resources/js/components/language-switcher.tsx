@@ -22,10 +22,10 @@ export function LanguageSwitcher({ className }: { className?: string }) {
                 type="button"
                 onClick={() => setLocale('pt')}
                 className={cn(
-                    'cursor-pointer rounded-md px-2 py-1 transition',
+                    'cursor-pointer rounded-md px-2 py-1 transition-all duration-200',
                     locale === 'pt'
-                        ? 'bg-slate-800 text-white shadow-xs dark:bg-white dark:text-slate-800'
-                        : 'text-slate-600 hover:text-slate-900 dark:text-slate-300 dark:hover:text-white',
+                        ? 'bg-slate-800 text-white shadow-xs hover:bg-slate-600 dark:bg-white dark:text-slate-800 dark:hover:bg-slate-200'
+                        : 'text-slate-600 hover:bg-slate-800 hover:text-white dark:text-slate-300 dark:hover:bg-white dark:hover:text-slate-800',
                 )}
             >
                 PT-BR
@@ -34,10 +34,10 @@ export function LanguageSwitcher({ className }: { className?: string }) {
                 type="button"
                 onClick={() => setLocale('en')}
                 className={cn(
-                    'cursor-pointer rounded-md px-2 py-1 transition',
+                    'cursor-pointer rounded-md px-2 py-1 transition-all duration-200',
                     locale === 'en'
-                        ? 'bg-slate-800 text-white shadow-xs dark:bg-white dark:text-slate-800'
-                        : 'text-slate-600 hover:text-slate-900 dark:text-slate-300 dark:hover:text-white',
+                        ? 'bg-slate-800 text-white shadow-xs hover:bg-slate-600 dark:bg-white dark:text-slate-800 dark:hover:bg-slate-200'
+                        : 'text-slate-600 hover:bg-slate-800 hover:text-white dark:text-slate-300 dark:hover:bg-white dark:hover:text-slate-800',
                 )}
             >
                 EN
