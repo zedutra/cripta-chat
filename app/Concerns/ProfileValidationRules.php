@@ -17,7 +17,6 @@ trait ProfileValidationRules
     protected function profileRules(?int $userId = null): array
     {
         return [
-            'name' => $this->nameRules(),
             'handle' => $this->handleRules($userId),
             'avatar_icon' => ['nullable', 'string', Rule::in(User::AVATAR_ICONS)],
             'email' => $this->emailRules($userId),
@@ -32,7 +31,7 @@ trait ProfileValidationRules
     protected function handleRules(?int $userId = null): array
     {
         return [
-            'nullable',
+            'required',
             'string',
             'min:3',
             'max:50',
@@ -41,16 +40,6 @@ trait ProfileValidationRules
                 ? Rule::unique(User::class, 'handle')
                 : Rule::unique(User::class, 'handle')->ignore($userId),
         ];
-    }
-
-    /**
-     * Get the validation rules used to validate user names.
-     *
-     * @return array<int, Unique|ValidationRule|array<mixed>|string>
-     */
-    protected function nameRules(): array
-    {
-        return ['required', 'string', 'max:255'];
     }
 
     /**

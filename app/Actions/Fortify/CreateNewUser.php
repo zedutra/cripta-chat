@@ -29,31 +29,11 @@ class CreateNewUser implements CreatesNewUsers
             'password' => $this->passwordRules(),
         ])->validate();
 
-        $handle = ! empty($input['handle'])
-            ? $input['handle']
-            : $this->generateUniqueHandle($input['name']);
-
         return User::create([
-            'name' => $input['name'],
-            'handle' => $handle,
+            'handle' => $input['handle'],
             'avatar_icon' => $input['avatar_icon'] ?? 'game-icons:william-tell-skull',
             'email' => $input['email'],
             'password' => $input['password'],
         ]);
-    }
-
-    private function generateUniqueHandle(string $name): string
-    {
-        $base = strtolower(Str::slug($name, '_')) ?: 'cripta_user';
-        $base = substr($base, 0, 40);
-        $candidate = $base;
-        $counter = 1;
-
-        while (User::where('handle', $candidate)->exists()) {
-            $candidate = $base.'_'.$counter;
-            $counter++;
-        }
-
-        return $candidate;
     }
 }

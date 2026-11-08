@@ -27,8 +27,8 @@ class ChatController extends Controller
         $user = $request->user();
 
         $contacts = $user->contacts()
-            ->select(['users.id', 'users.name', 'users.handle', 'users.avatar_icon', 'users.public_key', 'users.key_algorithm'])
-            ->orderBy('users.name')
+            ->select(['users.id', 'users.handle', 'users.avatar_icon', 'users.public_key', 'users.key_algorithm'])
+            ->orderBy('users.handle')
             ->get();
 
         $activeContactId = $request->integer('contact') ?: $contacts->first()?->id;

@@ -19,7 +19,6 @@ class DatabaseSeeder extends Seeder
         $alice = User::updateOrCreate(
             ['email' => 'alice@cripta.local'],
             [
-                'name' => 'Alice Crypto',
                 'handle' => 'alice',
                 'avatar_icon' => 'game-icons:witch-face',
                 'password' => Hash::make('password'),
@@ -30,7 +29,6 @@ class DatabaseSeeder extends Seeder
         $bob = User::updateOrCreate(
             ['email' => 'bob@cripta.local'],
             [
-                'name' => 'Bob Cipher',
                 'handle' => 'bob',
                 'avatar_icon' => 'game-icons:wizard-face',
                 'password' => Hash::make('password'),
