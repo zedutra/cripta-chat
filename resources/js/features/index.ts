@@ -1,2 +1,1 @@
-// Barrel file for shared domain features
-export {};
+export * from './chat';

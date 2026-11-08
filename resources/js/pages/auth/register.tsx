@@ -45,6 +45,28 @@ export default function Register({ passwordRules }: Props) {
                             </div>
 
                             <div className="grid gap-2">
+                                <Label htmlFor="handle">
+                                    Handle (@username)
+                                </Label>
+                                <div className="relative flex items-center">
+                                    <span className="pointer-events-none absolute left-3 font-bold text-muted-foreground">
+                                        @
+                                    </span>
+                                    <Input
+                                        id="handle"
+                                        type="text"
+                                        required
+                                        tabIndex={2}
+                                        autoComplete="username"
+                                        name="handle"
+                                        placeholder="seu_usuario"
+                                        className="pl-8"
+                                    />
+                                </div>
+                                <InputError message={errors.handle} />
+                            </div>
+
+                            <div className="grid gap-2">
                                 <Label htmlFor="email">Email address</Label>
                                 <Input
                                     id="email"

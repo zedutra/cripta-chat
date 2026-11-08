@@ -18,7 +18,27 @@ trait ProfileValidationRules
     {
         return [
             'name' => $this->nameRules(),
+            'handle' => $this->handleRules($userId),
             'email' => $this->emailRules($userId),
+        ];
+    }
+
+    /**
+     * Get the validation rules used to validate user handles (@username).
+     *
+     * @return array<int, Unique|ValidationRule|array<mixed>|string>
+     */
+    protected function handleRules(?int $userId = null): array
+    {
+        return [
+            'nullable',
+            'string',
+            'min:3',
+            'max:50',
+            'regex:/^[a-zA-Z0-9_]+$/',
+            $userId === null
+                ? Rule::unique(User::class, 'handle')
+                : Rule::unique(User::class, 'handle')->ignore($userId),
         ];
     }
 
