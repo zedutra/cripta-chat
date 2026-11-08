@@ -140,7 +140,7 @@ export function KeyManagerModal({
             <DialogTrigger asChild>
                 <Button
                     variant={hasConfiguredKeys ? 'outline' : 'default'}
-                    className="gap-2 border-slate-800 bg-slate-800 text-white hover:bg-slate-700 dark:border-white dark:bg-white dark:text-slate-800"
+                    className="gap-2 border border-white bg-white text-slate-800 hover:bg-slate-900 hover:text-white dark:border-white dark:bg-white dark:text-slate-800 dark:hover:bg-slate-900 dark:hover:text-white"
                 >
                     <KeyRound className="size-4" />
                     {hasConfiguredKeys && user.key_algorithm
@@ -168,14 +168,14 @@ export function KeyManagerModal({
                             <Label className="text-sm font-semibold">
                                 {t('keys.algorithm')}
                             </Label>
-                            <div className="inline-flex rounded-md border border-slate-800 p-0.5 dark:border-white">
+                            <div className="inline-flex gap-1 rounded-md border border-slate-800 p-0.5 dark:border-white">
                                 <button
                                     type="button"
                                     onClick={() => setAlgorithm('RSA')}
-                                    className={`rounded px-3 py-1 text-xs font-semibold transition ${
+                                    className={`cursor-pointer rounded px-3 py-1 text-xs font-semibold transition-all duration-200 ${
                                         algorithm === 'RSA'
-                                            ? 'bg-slate-800 text-white dark:bg-white dark:text-slate-800'
-                                            : 'text-slate-800 dark:text-white'
+                                            ? 'bg-slate-800 text-white hover:bg-slate-600 dark:bg-white dark:text-slate-800 dark:hover:bg-slate-200'
+                                            : 'text-slate-800 hover:bg-slate-800 hover:text-white dark:text-white dark:hover:bg-white dark:hover:text-slate-800'
                                     }`}
                                 >
                                     RSA (RSA-OAEP 2048)
@@ -183,10 +183,10 @@ export function KeyManagerModal({
                                 <button
                                     type="button"
                                     onClick={() => setAlgorithm('ECC')}
-                                    className={`rounded px-3 py-1 text-xs font-semibold transition ${
+                                    className={`cursor-pointer rounded px-3 py-1 text-xs font-semibold transition-all duration-200 ${
                                         algorithm === 'ECC'
-                                            ? 'bg-slate-800 text-white dark:bg-white dark:text-slate-800'
-                                            : 'text-slate-800 dark:text-white'
+                                            ? 'bg-slate-800 text-white hover:bg-slate-600 dark:bg-white dark:text-slate-800 dark:hover:bg-slate-200'
+                                            : 'text-slate-800 hover:bg-slate-800 hover:text-white dark:text-white dark:hover:bg-white dark:hover:text-slate-800'
                                     }`}
                                 >
                                     ECC (ECDH P-256)
@@ -264,7 +264,7 @@ export function KeyManagerModal({
                         type="button"
                         onClick={handleSaveAndPublish}
                         disabled={isSaving}
-                        className="w-full gap-2 bg-slate-800 text-white hover:bg-slate-700 sm:w-auto dark:bg-white dark:text-slate-800"
+                        className="w-full gap-2 border border-slate-800 bg-slate-800 text-white hover:bg-white hover:text-slate-800 sm:w-auto dark:border-white dark:bg-white dark:text-slate-800 dark:hover:bg-slate-800 dark:hover:text-white"
                     >
                         <Upload className="size-4" />
                         {isSaving ? t('keys.saving') : t('keys.save_btn')}

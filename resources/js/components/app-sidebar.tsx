@@ -132,7 +132,7 @@ export function AppSidebar() {
                             type="submit"
                             disabled={isAddingContact}
                             title={t('chat.add_contact.button')}
-                            className="inline-flex h-8 cursor-pointer items-center justify-center gap-1 rounded-lg bg-white px-2.5 text-xs font-semibold text-slate-800 transition hover:bg-slate-200 disabled:opacity-50"
+                            className="inline-flex h-8 cursor-pointer items-center justify-center gap-1 rounded-lg border border-white bg-white px-2.5 text-xs font-semibold text-slate-800 transition-all duration-200 hover:bg-slate-900 hover:text-white disabled:opacity-50"
                         >
                             <UserPlus className="size-3.5" />
                             <span className="sr-only sm:not-sr-only">
@@ -171,10 +171,10 @@ export function AppSidebar() {
                                                         contact.id,
                                                     )
                                                 }
-                                                className={`cursor-pointer rounded-xl px-3 py-2.5 transition ${
+                                                className={`cursor-pointer rounded-xl px-3 py-2.5 transition-all duration-200 ${
                                                     isSelected
-                                                        ? 'bg-white text-slate-800 hover:bg-white/95 hover:text-slate-800 data-[active=true]:bg-white data-[active=true]:text-slate-800'
-                                                        : 'text-sidebar-foreground hover:bg-sidebar-accent hover:text-sidebar-accent-foreground'
+                                                        ? 'border border-white bg-white text-slate-800 hover:bg-slate-700 hover:text-white data-[active=true]:bg-white data-[active=true]:text-slate-800 data-[active=true]:hover:bg-slate-700 data-[active=true]:hover:text-white'
+                                                        : 'border border-transparent text-sidebar-foreground hover:border-white hover:bg-white hover:text-slate-800'
                                                 }`}
                                             >
                                                 <MessageSquareLock className="size-4 shrink-0" />

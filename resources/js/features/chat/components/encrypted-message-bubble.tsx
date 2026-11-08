@@ -91,12 +91,12 @@ export function EncryptedMessageBubble({
                             ? t('bubble.unlocked_title')
                             : t('bubble.locked_title')
                     }
-                    className={`mt-0.5 flex size-10 shrink-0 cursor-pointer items-center justify-center rounded-xl border transition-transform hover:scale-105 ${
+                    className={`mt-0.5 flex size-10 shrink-0 cursor-pointer items-center justify-center rounded-xl border transition-all duration-200 hover:scale-105 ${
                         isUnlocked
-                            ? 'border-emerald-500/60 bg-emerald-500/15 text-emerald-400'
+                            ? 'border-emerald-500/60 bg-emerald-500/15 text-emerald-400 hover:bg-emerald-500 hover:text-white'
                             : isOwnMessage
-                              ? 'border-white/30 bg-white/10 text-white hover:bg-white/20'
-                              : 'border-slate-800/30 bg-slate-800 text-white hover:bg-slate-700'
+                              ? 'border-white/40 bg-white/10 text-white hover:bg-white hover:text-slate-800'
+                              : 'border-slate-800 bg-slate-800 text-white hover:bg-white hover:text-slate-800'
                     }`}
                 >
                     {isUnlocked ? (

@@ -271,7 +271,7 @@ export default function Dashboard({
                                         !messageText.trim() ||
                                         isSending
                                     }
-                                    className="gap-2 bg-slate-800 px-5 text-white hover:bg-slate-700 dark:bg-white dark:text-slate-800"
+                                    className="gap-2 border border-slate-800 bg-slate-800 px-5 text-white hover:bg-white hover:text-slate-800 dark:border-white dark:bg-white dark:text-slate-800 dark:hover:bg-slate-800 dark:hover:text-white"
                                 >
                                     <Send className="size-4" />
                                     {isSending

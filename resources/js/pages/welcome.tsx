@@ -30,7 +30,7 @@ export default function Welcome() {
                         {auth.user ? (
                             <Link
                                 href={dashboard()}
-                                className="inline-block rounded-lg bg-slate-800 px-5 py-2 text-sm font-semibold text-white hover:bg-slate-700 dark:bg-white dark:text-slate-800"
+                                className="inline-block rounded-lg border border-slate-800 bg-slate-800 px-5 py-2 text-sm font-semibold text-white transition-all duration-200 hover:bg-white hover:text-slate-800 dark:border-white dark:bg-white dark:text-slate-800 dark:hover:bg-slate-800 dark:hover:text-white"
                             >
                                 {t('nav.dashboard')}
                             </Link>
@@ -38,13 +38,13 @@ export default function Welcome() {
                             <>
                                 <Link
                                     href={login()}
-                                    className="inline-block rounded-lg border border-slate-800/30 px-4 py-2 text-sm font-medium text-slate-800 hover:bg-slate-100 dark:border-white/30 dark:text-white dark:hover:bg-slate-800"
+                                    className="inline-block rounded-lg border border-slate-800/40 px-4 py-2 text-sm font-medium text-slate-800 transition-all duration-200 hover:border-slate-800 hover:bg-slate-800 hover:text-white dark:border-white/40 dark:text-white dark:hover:border-white dark:hover:bg-white dark:hover:text-slate-800"
                                 >
                                     {t('nav.login')}
                                 </Link>
                                 <Link
                                     href={register()}
-                                    className="inline-block rounded-lg bg-slate-800 px-4 py-2 text-sm font-semibold text-white hover:bg-slate-700 dark:bg-white dark:text-slate-800"
+                                    className="inline-block rounded-lg border border-slate-800 bg-slate-800 px-4 py-2 text-sm font-semibold text-white transition-all duration-200 hover:bg-white hover:text-slate-800 dark:border-white dark:bg-white dark:text-slate-800 dark:hover:bg-slate-800 dark:hover:text-white"
                                 >
                                     {t('nav.register')}
                                 </Link>
@@ -110,7 +110,7 @@ export default function Welcome() {
                             {auth.user ? (
                                 <Link
                                     href={dashboard()}
-                                    className="rounded-xl bg-slate-800 px-6 py-3 font-semibold text-white hover:bg-slate-700 dark:bg-white dark:text-slate-800"
+                                    className="rounded-xl border border-slate-800 bg-slate-800 px-6 py-3 font-semibold text-white transition-all duration-200 hover:bg-white hover:text-slate-800 dark:border-white dark:bg-white dark:text-slate-800 dark:hover:bg-slate-800 dark:hover:text-white"
                                 >
                                     {t('welcome.cta.enter')}
                                 </Link>
@@ -118,13 +118,13 @@ export default function Welcome() {
                                 <>
                                     <Link
                                         href={login()}
-                                        className="rounded-xl bg-slate-800 px-6 py-3 font-semibold text-white hover:bg-slate-700 dark:bg-white dark:text-slate-800"
+                                        className="rounded-xl border border-slate-800 bg-slate-800 px-6 py-3 font-semibold text-white transition-all duration-200 hover:bg-white hover:text-slate-800 dark:border-white dark:bg-white dark:text-slate-800 dark:hover:bg-slate-800 dark:hover:text-white"
                                     >
                                         {t('welcome.cta.enter')}
                                     </Link>
                                     <Link
                                         href={register()}
-                                        className="rounded-xl border border-slate-800 px-6 py-3 font-semibold text-slate-800 hover:bg-slate-100 dark:border-white dark:text-white dark:hover:bg-slate-700"
+                                        className="rounded-xl border border-slate-800 px-6 py-3 font-semibold text-slate-800 transition-all duration-200 hover:bg-slate-800 hover:text-white dark:border-white dark:text-white dark:hover:bg-white dark:hover:text-slate-800"
                                     >
                                         {t('welcome.cta.create')}
                                     </Link>
