@@ -15,13 +15,9 @@ export default function Welcome() {
             <Head title={t('welcome.title')} />
             <div className="flex min-h-screen flex-col items-center bg-white p-6 text-slate-800 lg:justify-center lg:p-8 dark:bg-slate-900 dark:text-white">
                 <header className="mb-8 flex w-full max-w-4xl items-center justify-between text-sm">
-                    <div className="flex items-center gap-2">
-                        <span className="font-heading text-3xl font-bold tracking-wider">
-                            CRIPTA
-                        </span>
-                        <div className="flex size-9 items-center justify-center rounded-lg bg-slate-800 text-white dark:bg-white dark:text-slate-800">
-                            <AppLogoIcon className="size-5 fill-current" />
-                        </div>
+                    <div className="flex items-center gap-2 font-heading text-3xl font-bold tracking-wider">
+                        <span>CRIPTA</span>
+                        <AppLogoIcon className="size-[1em] shrink-0 fill-current" />
                     </div>
 
                     <nav className="flex items-center gap-3">

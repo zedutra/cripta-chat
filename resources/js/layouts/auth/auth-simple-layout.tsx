@@ -20,14 +20,10 @@ export default function AuthSimpleLayout({
                     <div className="flex flex-col items-center gap-4">
                         <Link
                             href={home()}
-                            className="flex items-center gap-2 font-medium"
+                            className="flex items-center gap-2 font-heading text-3xl font-bold tracking-wider text-foreground"
                         >
-                            <span className="font-heading text-3xl font-bold tracking-wider">
-                                CRIPTA
-                            </span>
-                            <div className="flex h-10 w-10 items-center justify-center rounded-lg bg-slate-800 text-white dark:bg-white dark:text-slate-800">
-                                <AppLogoIcon className="size-6 fill-current" />
-                            </div>
+                            <span>CRIPTA</span>
+                            <AppLogoIcon className="size-[1em] shrink-0 fill-current" />
                             <span className="sr-only">{title}</span>
                         </Link>
 
