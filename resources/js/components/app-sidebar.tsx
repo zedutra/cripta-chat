@@ -91,8 +91,8 @@ export function AppSidebar() {
     ];
 
     return (
-        <Sidebar collapsible="icon" variant="inset">
-            <SidebarHeader>
+        <Sidebar collapsible="offcanvas" variant="sidebar">
+            <SidebarHeader className="border-b border-sidebar-border/60 p-3">
                 <SidebarMenu>
                     <SidebarMenuItem>
                         <SidebarMenuButton size="lg" asChild>
@@ -106,7 +106,7 @@ export function AppSidebar() {
                 {/* Add Contact by @handle directly in the left sidebar */}
                 <form
                     onSubmit={handleAddContact}
-                    className="mt-2 flex flex-col gap-2 px-1 group-data-[collapsible=icon]:hidden"
+                    className="mt-2 flex flex-col gap-2 px-1"
                 >
                     <label
                         htmlFor="sidebar-add-handle"
@@ -114,8 +114,8 @@ export function AppSidebar() {
                     >
                         {t('chat.add_contact.label')}
                     </label>
-                    <div className="flex gap-1.5">
-                        <div className="relative flex-1">
+                    <div className="flex items-center gap-1.5">
+                        <div className="relative min-w-0 flex-1">
                             <AtSign className="pointer-events-none absolute top-2.5 left-2.5 size-3.5 text-sidebar-foreground/60" />
                             <input
                                 id="sidebar-add-handle"
@@ -125,17 +125,17 @@ export function AppSidebar() {
                                     setHandleSearch(e.target.value)
                                 }
                                 placeholder={t('chat.add_contact.placeholder')}
-                                className="h-8 w-full rounded-lg border border-sidebar-border bg-white/10 pr-2 pl-7 text-xs text-sidebar-foreground placeholder:text-sidebar-foreground/50 focus:ring-1 focus:ring-white focus:outline-none"
+                                className="h-9 w-full rounded-lg border border-sidebar-border bg-white/10 pr-2.5 pl-7 text-xs text-sidebar-foreground placeholder:text-sidebar-foreground/50 focus:ring-1 focus:ring-white focus:outline-none"
                             />
                         </div>
                         <button
                             type="submit"
                             disabled={isAddingContact}
                             title={t('chat.add_contact.button')}
-                            className="inline-flex h-8 cursor-pointer items-center justify-center gap-1 rounded-lg border border-white bg-white px-2.5 text-xs font-semibold text-slate-800 transition-all duration-200 hover:bg-slate-900 hover:text-white disabled:opacity-50"
+                            className="inline-flex size-9 shrink-0 cursor-pointer items-center justify-center rounded-lg border border-white bg-white text-xs font-semibold text-slate-800 transition-all duration-200 hover:bg-slate-900 hover:text-white disabled:opacity-50"
                         >
-                            <UserPlus className="size-3.5" />
-                            <span className="sr-only sm:not-sr-only">
+                            <UserPlus className="size-4" />
+                            <span className="sr-only">
                                 {t('chat.add_contact.button')}
                             </span>
                         </button>
@@ -144,17 +144,17 @@ export function AppSidebar() {
             </SidebarHeader>
 
             <SidebarContent>
-                <SidebarGroup className="px-2 py-2">
+                <SidebarGroup className="px-3 py-2">
                     <SidebarGroupLabel className="text-sidebar-foreground/70">
                         {t('chat.conversations')} ({contacts.length})
                     </SidebarGroupLabel>
                     <SidebarGroupContent>
                         {contacts.length === 0 ? (
-                            <div className="px-2 py-6 text-center text-xs text-sidebar-foreground/60 group-data-[collapsible=icon]:hidden">
+                            <div className="px-2 py-6 text-center text-xs text-sidebar-foreground/60">
                                 {t('chat.no_contacts')}
                             </div>
                         ) : (
-                            <SidebarMenu className="gap-1">
+                            <SidebarMenu className="gap-1.5">
                                 {contacts.map((contact) => {
                                     const isSelected =
                                         contact.id === selectedContactId;
@@ -163,22 +163,19 @@ export function AppSidebar() {
                                             <SidebarMenuButton
                                                 size="lg"
                                                 isActive={isSelected}
-                                                tooltip={{
-                                                    children: `${contact.name} (@${contact.handle})`,
-                                                }}
                                                 onClick={() =>
                                                     handleSelectContact(
                                                         contact.id,
                                                     )
                                                 }
-                                                className={`cursor-pointer rounded-xl px-3 py-2.5 transition-all duration-200 ${
+                                                className={`h-auto cursor-pointer rounded-xl px-3 py-2.5 transition-all duration-200 ${
                                                     isSelected
                                                         ? 'border border-white bg-white text-slate-800 hover:bg-slate-700 hover:text-white data-[active=true]:bg-white data-[active=true]:text-slate-800 data-[active=true]:hover:bg-slate-700 data-[active=true]:hover:text-white'
                                                         : 'border border-transparent text-sidebar-foreground hover:border-white hover:bg-white hover:text-slate-800'
                                                 }`}
                                             >
                                                 <MessageSquareLock className="size-4 shrink-0" />
-                                                <div className="flex min-w-0 flex-1 items-center justify-between gap-2 group-data-[collapsible=icon]:hidden">
+                                                <div className="flex min-w-0 flex-1 items-center justify-between gap-2">
                                                     <div className="min-w-0">
                                                         <div className="truncate font-heading text-lg leading-tight font-bold">
                                                             {contact.name}
