@@ -9,9 +9,11 @@
 
 @theme {
     --font-sans:
-        'Shadows Into Light', cursive, ui-sans-serif, system-ui, sans-serif,
+        'Instrument Sans', ui-sans-serif, system-ui, sans-serif,
         'Apple Color Emoji', 'Segoe UI Emoji', 'Segoe UI Symbol',
         'Noto Color Emoji';
+    --font-heading:
+        'Shadows Into Light', cursive, ui-sans-serif, system-ui, sans-serif;
     --font-display:
         'Permanent Marker', 'Shadows Into Light', cursive, sans-serif;
 
@@ -141,5 +143,15 @@
 
     body {
         @apply bg-background text-foreground;
+    }
+
+    h1,
+    h2,
+    h3,
+    h4,
+    h5,
+    h6 {
+        font-family: var(--font-heading);
+        letter-spacing: 0.03em;
     }
 }
