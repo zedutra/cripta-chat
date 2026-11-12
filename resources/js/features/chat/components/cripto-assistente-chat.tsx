@@ -1,6 +1,7 @@
 import { Bot, Send, Sparkles } from 'lucide-react';
 import { useEffect, useRef, useState } from 'react';
 import { toast } from 'sonner';
+import { MarkdownContent } from '@/components/markdown-content';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { useI18n } from '@/lib/i18n';
@@ -201,9 +202,16 @@ export function CriptoAssistenteChat() {
                                     {!isOwn && (
                                         <Bot className="mt-0.5 size-5 shrink-0" />
                                     )}
-                                    <p className="text-sm leading-relaxed break-words whitespace-pre-wrap">
-                                        {msg.content}
-                                    </p>
+                                    <div className="min-w-0 flex-1">
+                                        <MarkdownContent
+                                            content={msg.content}
+                                            className={
+                                                isOwn
+                                                    ? '[&_strong]:text-white [&_code]:bg-white/20 [&_code]:text-white'
+                                                    : ''
+                                            }
+                                        />
+                                    </div>
                                 </div>
                             </div>
                         );
