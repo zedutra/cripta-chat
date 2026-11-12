@@ -131,7 +131,7 @@ export function CriptoAssistenteChat() {
     return (
         <>
             {/* Assistant Header */}
-            <div className="flex items-center justify-between border-b border-slate-800/15 bg-slate-800 px-5 py-3.5 text-white dark:border-slate-800">
+            <div className="shrink-0 flex items-center justify-between border-b border-slate-800/15 bg-slate-800 px-5 py-3.5 text-white dark:border-slate-800">
                 <div className="flex items-center gap-3">
                     <div className="flex size-10 items-center justify-center rounded-xl bg-white text-slate-800">
                         <Bot className="size-6" />
@@ -154,7 +154,7 @@ export function CriptoAssistenteChat() {
             {/* Assistant Messages */}
             <div
                 ref={containerRef}
-                className="flex-1 space-y-4 overflow-y-auto bg-slate-50/60 p-5 dark:bg-slate-950/50"
+                className="flex-1 min-h-0 space-y-4 overflow-y-auto bg-slate-50/60 p-5 dark:bg-slate-950/50"
             >
                 {isLoadingHistory ? (
                     <div className="space-y-3">
@@ -231,7 +231,7 @@ export function CriptoAssistenteChat() {
             {/* Assistant Composer */}
             <form
                 onSubmit={handleAsk}
-                className="flex items-center gap-3 border-t border-slate-800/15 bg-white p-4 dark:border-slate-800 dark:bg-slate-900"
+                className="shrink-0 flex items-center gap-3 border-t border-slate-800/15 bg-white p-4 dark:border-slate-800 dark:bg-slate-900"
             >
                 <Input
                     type="text"

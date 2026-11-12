@@ -242,9 +242,9 @@ export default function Dashboard({
         <>
             <Head title="CRIPTA Chat E2EE" />
 
-            <div className="flex h-[calc(100vh-4rem)] flex-1 flex-col gap-4 p-4">
+            <div className="flex flex-1 min-h-0 flex-col gap-4 p-4 overflow-hidden">
                 {/* Top Status Bar: User @handle & Key Manager */}
-                <div className="flex flex-wrap items-center justify-between gap-4 rounded-2xl border border-slate-800/20 bg-slate-800 px-5 py-3 text-white shadow-sm dark:border-slate-700">
+                <div className="shrink-0 flex flex-wrap items-center justify-between gap-4 rounded-2xl border border-slate-800/20 bg-slate-800 px-5 py-3 text-white shadow-sm dark:border-slate-700">
                     <div className="flex items-center gap-3">
                         <div className="flex size-10 items-center justify-center rounded-xl bg-white text-slate-800">
                             <ProfileAvatarIcon
@@ -315,7 +315,7 @@ export default function Dashboard({
                     ) : activeContact ? (
                         <>
                             {/* Chat Header */}
-                            <div className="flex items-center justify-between border-b border-slate-800/15 bg-slate-800 px-5 py-3.5 text-white dark:border-slate-800">
+                            <div className="shrink-0 flex items-center justify-between border-b border-slate-800/15 bg-slate-800 px-5 py-3.5 text-white dark:border-slate-800">
                                 <div className="flex items-center gap-3">
                                     <div className="flex size-10 items-center justify-center rounded-xl bg-white/15">
                                         <ProfileAvatarIcon
@@ -351,7 +351,7 @@ export default function Dashboard({
                             {/* Messages List */}
                             <div
                                 ref={messagesContainerRef}
-                                className="flex-1 space-y-4 overflow-y-auto bg-slate-50/60 p-5 dark:bg-slate-950/50"
+                                className="flex-1 min-h-0 space-y-4 overflow-y-auto bg-slate-50/60 p-5 dark:bg-slate-950/50"
                             >
                                 {liveMessages.length === 0 ? (
                                     <div className="flex h-full flex-col items-center justify-center text-center text-slate-500">
@@ -383,7 +383,7 @@ export default function Dashboard({
                             {/* Message Composer */}
                             <form
                                 onSubmit={handleSendMessage}
-                                className="flex items-center gap-3 border-t border-slate-800/15 bg-white p-4 dark:border-slate-800 dark:bg-slate-900"
+                                className="shrink-0 flex items-center gap-3 border-t border-slate-800/15 bg-white p-4 dark:border-slate-800 dark:bg-slate-900"
                             >
                                 <Input
                                     type="text"

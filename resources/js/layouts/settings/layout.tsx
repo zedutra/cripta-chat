@@ -34,7 +34,7 @@ export default function SettingsLayout({ children }: PropsWithChildren) {
     ];
 
     return (
-        <div className="px-4 py-6">
+        <div className="flex-1 overflow-y-auto px-4 py-6">
             <Heading
                 title={t('settings.title')}
                 description={t('settings.description')}
