@@ -30,7 +30,11 @@ class ChatController extends Controller
 
         $contacts = $this->getContactsForUser($user);
 
-        $activeContactId = $request->integer('contact') ?: $contacts->first()?->id;
+        $isAssistantActive = $request->boolean('assistant') || ($contacts->isEmpty() && ! $request->integer('contact'));
+
+        $activeContactId = $isAssistantActive
+            ? null
+            : ($request->integer('contact') ?: $contacts->first()?->id);
 
         $messages = $this->getMessagesForContact($user, $activeContactId);
 
@@ -38,6 +42,7 @@ class ChatController extends Controller
             'contacts' => $contacts,
             'activeContactId' => $activeContactId,
             'messages' => $messages,
+            'isAssistantActive' => $isAssistantActive,
         ]);
     }
 

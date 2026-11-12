@@ -13,6 +13,7 @@ import { ProfileAvatarIcon } from '@/components/icons/profile-avatar-icons';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import {
+    CriptoAssistenteChat,
     EncryptedMessageBubble,
     KeyManagerModal,
     encryptForPublicKey,
@@ -27,12 +28,14 @@ type Props = {
     contacts: ChatContact[];
     activeContactId: number | null;
     messages: EncryptedMessageItem[];
+    isAssistantActive?: boolean;
 };
 
 export default function Dashboard({
     contacts = [],
     activeContactId = null,
     messages = [],
+    isAssistantActive = false,
 }: Props) {
     const { auth } = usePage<{ auth: Auth }>().props;
     const currentUser = auth.user;
@@ -56,10 +59,11 @@ export default function Dashboard({
         setLiveMessages(messages);
     }, [messages]);
 
-    const activeContact =
-        contacts.find((c) => c.id === activeContactId) ??
-        contacts[0] ??
-        null;
+    const activeContact = isAssistantActive
+        ? null
+        : (contacts.find((c) => c.id === activeContactId) ??
+          contacts[0] ??
+          null);
 
     // Scroll to bottom when switching active contact
     useEffect(() => {
@@ -306,7 +310,9 @@ export default function Dashboard({
 
                 {/* Full-Width Encrypted Chat Window */}
                 <div className="flex min-h-0 flex-1 flex-col overflow-hidden rounded-2xl border border-slate-800/20 bg-white dark:border-slate-700 dark:bg-slate-900">
-                    {activeContact ? (
+                    {isAssistantActive ? (
+                        <CriptoAssistenteChat />
+                    ) : activeContact ? (
                         <>
                             {/* Chat Header */}
                             <div className="flex items-center justify-between border-b border-slate-800/15 bg-slate-800 px-5 py-3.5 text-white dark:border-slate-800">

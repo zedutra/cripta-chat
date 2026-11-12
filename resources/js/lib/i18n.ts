@@ -167,6 +167,23 @@ const dictionary = {
         'chat.toast.handle_not_found':
             'Não foi possível encontrar este @handle.',
 
+        // Cripto Assistente (AI Agent)
+        'assistant.name': 'Cripto Assistente',
+        'assistant.subtitle':
+            'Agente de IA da CRIPTA — tire suas dúvidas sobre o sistema',
+        'assistant.empty.title': 'Olá! Eu sou o Cripto Assistente',
+        'assistant.empty.desc':
+            'Pergunte qualquer coisa sobre a CRIPTA: chaves RSA/ECC, arquivos .PEM, cadeados, contatos, Passkeys e mais.',
+        'assistant.suggestion.keys': 'Como configuro minhas chaves E2EE?',
+        'assistant.suggestion.padlock':
+            'Como descriptografo uma mensagem?',
+        'assistant.suggestion.contacts': 'Como adiciono um contato?',
+        'assistant.placeholder': 'Pergunte algo ao Cripto Assistente...',
+        'assistant.send': 'Perguntar',
+        'assistant.thinking': 'Pensando...',
+        'assistant.toast.error':
+            'Não foi possível obter uma resposta do Cripto Assistente.',
+
         // Message Bubble
         'bubble.unlocked_title':
             'Mensagem descriptografada (clique para trancar novamente)',
@@ -413,6 +430,22 @@ const dictionary = {
         'chat.toast.encrypt_error':
             'Failed to encrypt message in browser. Check public keys.',
         'chat.toast.handle_not_found': 'Could not find this @handle.',
+
+        // Cripto Assistente (AI Agent)
+        'assistant.name': 'Cripto Assistente',
+        'assistant.subtitle':
+            'CRIPTA AI agent — ask anything about the system',
+        'assistant.empty.title': "Hi! I'm Cripto Assistente",
+        'assistant.empty.desc':
+            'Ask anything about CRIPTA: RSA/ECC keys, .PEM files, padlocks, contacts, passkeys and more.',
+        'assistant.suggestion.keys': 'How do I set up my E2EE keys?',
+        'assistant.suggestion.padlock': 'How do I decrypt a message?',
+        'assistant.suggestion.contacts': 'How do I add a contact?',
+        'assistant.placeholder': 'Ask Cripto Assistente something...',
+        'assistant.send': 'Ask',
+        'assistant.thinking': 'Thinking...',
+        'assistant.toast.error':
+            'Could not get a response from Cripto Assistente.',
 
         // Message Bubble
         'bubble.unlocked_title':
