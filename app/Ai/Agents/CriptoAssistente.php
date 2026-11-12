@@ -27,31 +27,35 @@ class CriptoAssistente implements Agent, Conversational, HasTools
     public function __construct(public ?User $user = null) {}
 
     /**
-     * Resolve the preferred AI provider based on configured environment keys.
+     * Resolve the preferred AI providers with automatic failover based on configured environment keys.
+     *
+     * @return array<string, string|null>|Lab|string
      */
-    public function provider(): Lab|string
+    public function provider(): array|Lab|string
     {
+        $providers = [];
+
         if (filled(config('ai.providers.gemini.key'))) {
-            return Lab::Gemini;
+            $providers['gemini'] = (string) config('ai.providers.gemini.models.text.default', 'gemini-2.5-flash');
         }
 
         if (filled(config('ai.providers.openai.key'))) {
-            return Lab::OpenAI;
+            $providers['openai'] = 'gpt-4o-mini';
         }
 
         if (filled(config('ai.providers.anthropic.key'))) {
-            return Lab::Anthropic;
+            $providers['anthropic'] = 'claude-3-5-haiku-latest';
         }
 
         if (filled(config('ai.providers.groq.key'))) {
-            return Lab::Groq;
+            $providers['groq'] = 'llama-3.3-70b-versatile';
         }
 
         if (filled(config('ai.providers.deepseek.key'))) {
-            return Lab::DeepSeek;
+            $providers['deepseek'] = 'deepseek-chat';
         }
 
-        return (string) config('ai.default', 'openai');
+        return $providers !== [] ? $providers : (string) config('ai.default', 'gemini');
     }
 
     /**

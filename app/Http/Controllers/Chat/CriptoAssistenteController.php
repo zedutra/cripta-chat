@@ -42,9 +42,11 @@ class CriptoAssistenteController extends Controller
         $user = $request->user();
 
         try {
-            $response = CriptoAssistente::make(user: $user)
-                ->continueLastConversation($user)
-                ->prompt((string) $request->validated('message'));
+            $response = retry(3, function () use ($user, $request) {
+                return CriptoAssistente::make(user: $user)
+                    ->continueLastConversation($user)
+                    ->prompt((string) $request->validated('message'));
+            }, 1000);
         } catch (Throwable $exception) {
             Log::warning('Cripto Assistente failed to respond.', ['error' => $exception->getMessage()]);
 
