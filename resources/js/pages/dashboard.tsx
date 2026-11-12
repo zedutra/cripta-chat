@@ -6,7 +6,7 @@ import {
     Send,
     ShieldAlert,
 } from 'lucide-react';
-import { useEffect, useState } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import { toast } from 'sonner';
 import { PadlockIcon } from '@/components/icons/padlock-icons';
 import { ProfileAvatarIcon } from '@/components/icons/profile-avatar-icons';
@@ -41,15 +41,134 @@ export default function Dashboard({
     const [privateKeyPem, setPrivateKeyPem] = useState<string>('');
     const [messageText, setMessageText] = useState<string>('');
     const [isSending, setIsSending] = useState<boolean>(false);
+    const [liveMessages, setLiveMessages] =
+        useState<EncryptedMessageItem[]>(messages);
+    const messagesContainerRef = useRef<HTMLDivElement | null>(null);
+    const prevLastMessageIdRef = useRef<number | null>(
+        messages[messages.length - 1]?.id ?? null,
+    );
 
     useEffect(() => {
         setPrivateKeyPem(loadLocalPrivateKey(currentUser.id));
     }, [currentUser.id]);
 
+    useEffect(() => {
+        setLiveMessages(messages);
+    }, [messages]);
+
     const activeContact =
         contacts.find((c) => c.id === activeContactId) ??
         contacts[0] ??
         null;
+
+    // Scroll to bottom when switching active contact
+    useEffect(() => {
+        if (messagesContainerRef.current) {
+            messagesContainerRef.current.scrollTop =
+                messagesContainerRef.current.scrollHeight;
+        }
+    }, [activeContact?.id]);
+
+    // Auto-scroll smoothly when a new message arrives
+    useEffect(() => {
+        const lastId = liveMessages[liveMessages.length - 1]?.id ?? null;
+        if (lastId !== prevLastMessageIdRef.current) {
+            prevLastMessageIdRef.current = lastId;
+            if (messagesContainerRef.current) {
+                messagesContainerRef.current.scrollTo({
+                    top: messagesContainerRef.current.scrollHeight,
+                    behavior: 'smooth',
+                });
+            }
+        }
+    }, [liveMessages]);
+
+    // Real-time background synchronization for incoming messages and contact updates
+    useEffect(() => {
+        let isCancelled = false;
+
+        const pollChatUpdates = async () => {
+            if (document.visibilityState !== 'visible') {
+                return;
+            }
+
+            try {
+                const query = activeContact?.id
+                    ? `?contact=${activeContact.id}`
+                    : '';
+                const response = await fetch(`/chat/sync${query}`, {
+                    headers: {
+                        Accept: 'application/json',
+                        'X-Requested-With': 'XMLHttpRequest',
+                    },
+                    credentials: 'same-origin',
+                });
+
+                if (!response.ok || isCancelled) {
+                    return;
+                }
+
+                const data = (await response.json()) as {
+                    contacts: ChatContact[];
+                    activeContactId: number | null;
+                    messages: EncryptedMessageItem[];
+                };
+
+                if (isCancelled) {
+                    return;
+                }
+
+                setLiveMessages((prev) => {
+                    const prevLastId = prev[prev.length - 1]?.id ?? null;
+                    const nextLastId =
+                        data.messages[data.messages.length - 1]?.id ?? null;
+                    if (
+                        prev.length !== data.messages.length ||
+                        prevLastId !== nextLastId
+                    ) {
+                        return data.messages;
+                    }
+                    return prev;
+                });
+
+                const contactsSignature = JSON.stringify(
+                    contacts.map((c) => [
+                        c.id,
+                        c.handle,
+                        c.avatar_icon,
+                        c.public_key,
+                        c.key_algorithm,
+                    ]),
+                );
+                const nextContactsSignature = JSON.stringify(
+                    data.contacts.map((c) => [
+                        c.id,
+                        c.handle,
+                        c.avatar_icon,
+                        c.public_key,
+                        c.key_algorithm,
+                    ]),
+                );
+
+                if (contactsSignature !== nextContactsSignature) {
+                    router.reload({
+                        only: ['contacts', 'activeContactId', 'messages'],
+                    });
+                }
+            } catch {
+                // Ignore transient network errors during background sync
+            }
+        };
+
+        const intervalId = window.setInterval(() => {
+            void pollChatUpdates();
+        }, 2500);
+
+        return () => {
+            isCancelled = true;
+            window.clearInterval(intervalId);
+        };
+    }, [activeContact?.id, contacts]);
 
     const handleSendMessage = async (e: React.FormEvent) => {
         e.preventDefault();
@@ -224,8 +343,11 @@ export default function Dashboard({
                             </div>
 
                             {/* Messages List */}
-                            <div className="flex-1 space-y-4 overflow-y-auto bg-slate-50/60 p-5 dark:bg-slate-950/50">
-                                {messages.length === 0 ? (
+                            <div
+                                ref={messagesContainerRef}
+                                className="flex-1 space-y-4 overflow-y-auto bg-slate-50/60 p-5 dark:bg-slate-950/50"
+                            >
+                                {liveMessages.length === 0 ? (
                                     <div className="flex h-full flex-col items-center justify-center text-center text-slate-500">
                                         <PadlockIcon className="mb-3 size-12 opacity-40" />
                                         <h3 className="text-2xl font-bold">
@@ -238,7 +360,7 @@ export default function Dashboard({
                                         </p>
                                     </div>
                                 ) : (
-                                    messages.map((msg) => (
+                                    liveMessages.map((msg) => (
                                         <EncryptedMessageBubble
                                             key={msg.id}
                                             message={msg}

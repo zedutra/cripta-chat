@@ -14,8 +14,10 @@ use App\Http\Requests\Chat\SendEncryptedMessageRequest;
 use App\Http\Requests\Chat\UpdatePublicKeyRequest;
 use App\Models\EncryptedMessage;
 use App\Models\User;
+use Illuminate\Http\JsonResponse;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
+use Illuminate\Support\Collection;
 use Inertia\Inertia;
 use Inertia\Response;
 
@@ -26,44 +28,79 @@ class ChatController extends Controller
         /** @var User $user */
         $user = $request->user();
 
-        $contacts = $user->contacts()
-            ->select(['users.id', 'users.handle', 'users.avatar_icon', 'users.public_key', 'users.key_algorithm'])
-            ->orderBy('users.handle')
-            ->get();
+        $contacts = $this->getContactsForUser($user);
 
         $activeContactId = $request->integer('contact') ?: $contacts->first()?->id;
 
-        $messages = [];
-
-        if ($activeContactId) {
-            $messages = EncryptedMessage::query()
-                ->where(function ($query) use ($user, $activeContactId) {
-                    $query->where('sender_id', $user->id)
-                        ->where('recipient_id', $activeContactId);
-                })
-                ->orWhere(function ($query) use ($user, $activeContactId) {
-                    $query->where('sender_id', $activeContactId)
-                        ->where('recipient_id', $user->id);
-                })
-                ->orderBy('created_at', 'asc')
-                ->limit(200)
-                ->get()
-                ->map(fn (EncryptedMessage $msg) => [
-                    'id' => $msg->id,
-                    'sender_id' => $msg->sender_id,
-                    'recipient_id' => $msg->recipient_id,
-                    'algorithm' => $msg->algorithm->value,
-                    'recipient_ciphertext' => $msg->recipient_ciphertext,
-                    'sender_ciphertext' => $msg->sender_ciphertext,
-                    'created_at' => $msg->created_at?->toIso8601String(),
-                ]);
-        }
+        $messages = $this->getMessagesForContact($user, $activeContactId);
 
         return Inertia::render('dashboard', [
             'contacts' => $contacts,
             'activeContactId' => $activeContactId,
             'messages' => $messages,
         ]);
+    }
+
+    public function sync(Request $request): JsonResponse
+    {
+        /** @var User $user */
+        $user = $request->user();
+
+        $contacts = $this->getContactsForUser($user);
+
+        $activeContactId = $request->integer('contact') ?: $contacts->first()?->id;
+
+        $messages = $this->getMessagesForContact($user, $activeContactId);
+
+        return response()->json([
+            'contacts' => $contacts,
+            'activeContactId' => $activeContactId,
+            'messages' => $messages,
+        ]);
+    }
+
+    /**
+     * @return Collection<int, User>
+     */
+    private function getContactsForUser(User $user): Collection
+    {
+        return $user->contacts()
+            ->select(['users.id', 'users.handle', 'users.avatar_icon', 'users.public_key', 'users.key_algorithm'])
+            ->orderBy('users.handle')
+            ->get();
+    }
+
+    /**
+     * @return Collection<int, array<string, mixed>>|array<int, never>
+     */
+    private function getMessagesForContact(User $user, ?int $activeContactId): Collection|array
+    {
+        if (! $activeContactId) {
+            return [];
+        }
+
+        return EncryptedMessage::query()
+            ->where(function ($query) use ($user, $activeContactId) {
+                $query->where('sender_id', $user->id)
+                    ->where('recipient_id', $activeContactId);
+            })
+            ->orWhere(function ($query) use ($user, $activeContactId) {
+                $query->where('sender_id', $activeContactId)
+                    ->where('recipient_id', $user->id);
+            })
+            ->orderBy('created_at', 'asc')
+            ->orderBy('id', 'asc')
+            ->limit(200)
+            ->get()
+            ->map(fn (EncryptedMessage $msg) => [
+                'id' => $msg->id,
+                'sender_id' => $msg->sender_id,
+                'recipient_id' => $msg->recipient_id,
+                'algorithm' => $msg->algorithm->value,
+                'recipient_ciphertext' => $msg->recipient_ciphertext,
+                'sender_ciphertext' => $msg->sender_ciphertext,
+                'created_at' => $msg->created_at?->toIso8601String(),
+            ]);
     }
 
     public function updatePublicKey(
