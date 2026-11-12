@@ -147,17 +147,32 @@ export default function Dashboard({
                         <div className="flex items-center gap-1.5 rounded-lg bg-white/10 px-3 py-1.5 text-xs">
                             {currentUser.public_key && privateKeyPem ? (
                                 <>
-                                    <CheckCircle2 className="size-4 text-emerald-400" />
+                                    <CheckCircle2 className="size-4 shrink-0 text-emerald-400" />
                                     <span>
                                         {t('chat.status.active')} (
                                         {currentUser.key_algorithm}) —{' '}
                                         {t('chat.status.client_key')}
                                     </span>
                                 </>
+                            ) : currentUser.public_key &&
+                              currentUser.key_algorithm ? (
+                                <>
+                                    <ShieldAlert className="size-4 shrink-0 text-amber-300" />
+                                    <span>
+                                        {t(
+                                            'chat.status.key_exists_missing_priv',
+                                            {
+                                                alg: currentUser.key_algorithm,
+                                            },
+                                        )}
+                                    </span>
+                                </>
                             ) : (
                                 <>
-                                    <ShieldAlert className="size-4 text-amber-300" />
-                                    <span>{t('chat.status.pending')}</span>
+                                    <ShieldAlert className="size-4 shrink-0 text-amber-300" />
+                                    <span>
+                                        {t('chat.status.no_key_created')}
+                                    </span>
                                 </>
                             )}
                         </div>

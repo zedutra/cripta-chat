@@ -126,6 +126,10 @@ const dictionary = {
         'chat.status.active': 'E2EE Ativo',
         'chat.status.client_key': 'Private Key no Cliente',
         'chat.status.pending': 'Chaves E2EE pendentes neste navegador',
+        'chat.status.key_exists_missing_priv':
+            'Chave {alg} já criada nesta conta — envie sua Private Key (.PEM) ou gere uma nova',
+        'chat.status.no_key_created':
+            'Nenhuma chave E2EE criada nesta conta ainda',
         'chat.add_contact.label': 'Adicionar pessoa pelo @',
         'chat.add_contact.placeholder': 'usuario_destino',
         'chat.add_contact.button': 'Adicionar',
@@ -179,12 +183,15 @@ const dictionary = {
         // Key Manager Modal
         'keys.button.configured': 'Chaves E2EE ({alg})',
         'keys.button.setup': 'Configurar Chaves (RSA / ECC)',
+        'keys.button.upload_pem': 'Upload da Chave (.PEM)',
+        'keys.button.generate_new': 'Gerar Nova Chave',
         'keys.modal.title': 'Gerenciador de Chaves E2EE (RSA & ECC)',
         'keys.modal.desc':
-            'Você pode gerar um novo par de chaves ou colar suas próprias chaves. O servidor armazena apenas a sua Public Key. Sua Private Key fica exclusivamente no seu navegador para descriptografia client-side.',
+            'Você pode enviar seu arquivo .PEM salvo anteriormente, gerar um novo par de chaves ou colar suas chaves manualmente. O servidor armazena apenas a sua Public Key. Sua Private Key fica exclusivamente no seu navegador.',
         'keys.algorithm': 'Algoritmo:',
         'keys.generating': 'Gerando...',
         'keys.generate_btn': 'Gerar Par {alg}',
+        'keys.upload_pem_btn': 'Upload .PEM',
         'keys.download_pem': 'Baixar .PEM',
         'keys.pubkey_label':
             'Public Key (Enviada ao servidor para que contatos criptografem mensagens para você)',
@@ -203,6 +210,12 @@ const dictionary = {
             'Informe tanto a Public Key quanto a sua Private Key.',
         'keys.toast.invalid_pair':
             'As chaves informadas não são válidas para o algoritmo {alg}. Verifique o formato PEM.',
+        'keys.toast.pem_uploaded':
+            'Chave privada (.PEM) carregada e validada com sucesso neste navegador!',
+        'keys.toast.pem_invalid_format':
+            'O arquivo selecionado não contém uma Private Key PEM válida (-----BEGIN PRIVATE KEY-----).',
+        'keys.toast.pem_mismatch':
+            'A Private Key enviada não corresponde à Public Key atual da sua conta.',
 
         // Settings
         'settings.title': 'Configurações',
@@ -361,6 +374,10 @@ const dictionary = {
         'chat.status.active': 'E2EE Active',
         'chat.status.client_key': 'Private Key on Client',
         'chat.status.pending': 'E2EE Keys pending in this browser',
+        'chat.status.key_exists_missing_priv':
+            '{alg} key already created on this account — upload your Private Key (.PEM) or generate a new one',
+        'chat.status.no_key_created':
+            'No E2EE key created on this account yet',
         'chat.add_contact.label': 'Add person by @',
         'chat.add_contact.placeholder': 'target_user',
         'chat.add_contact.button': 'Add',
@@ -413,12 +430,15 @@ const dictionary = {
         // Key Manager Modal
         'keys.button.configured': 'E2EE Keys ({alg})',
         'keys.button.setup': 'Configure Keys (RSA / ECC)',
+        'keys.button.upload_pem': 'Upload Key (.PEM)',
+        'keys.button.generate_new': 'Generate New Key',
         'keys.modal.title': 'E2EE Key Manager (RSA & ECC)',
         'keys.modal.desc':
-            'You can generate a new key pair or paste your own keys. The server only stores your Public Key. Your Private Key stays exclusively in your browser for client-side decryption.',
+            'You can upload your previously saved .PEM file, generate a new key pair, or paste your keys manually. The server only stores your Public Key. Your Private Key stays exclusively in your browser.',
         'keys.algorithm': 'Algorithm:',
         'keys.generating': 'Generating...',
         'keys.generate_btn': 'Generate {alg} Pair',
+        'keys.upload_pem_btn': 'Upload .PEM',
         'keys.download_pem': 'Download .PEM',
         'keys.pubkey_label':
             'Public Key (Sent to server so contacts can encrypt messages for you)',
@@ -435,6 +455,12 @@ const dictionary = {
             'Please provide both Public Key and your Private Key.',
         'keys.toast.invalid_pair':
             'Provided keys are not valid for {alg} algorithm. Check PEM format.',
+        'keys.toast.pem_uploaded':
+            'Private key (.PEM) uploaded and validated in this browser!',
+        'keys.toast.pem_invalid_format':
+            'Selected file does not contain a valid PEM Private Key (-----BEGIN PRIVATE KEY-----).',
+        'keys.toast.pem_mismatch':
+            'Uploaded Private Key does not match the current Public Key on your account.',
 
         // Settings
         'settings.title': 'Settings',
