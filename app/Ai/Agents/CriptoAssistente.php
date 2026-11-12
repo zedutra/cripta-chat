@@ -36,7 +36,7 @@ class CriptoAssistente implements Agent, Conversational, HasTools
         $providers = [];
 
         if (filled(config('ai.providers.gemini.key'))) {
-            $providers['gemini'] = (string) config('ai.providers.gemini.models.text.default', 'gemini-2.5-flash');
+            $providers['gemini'] = (string) config('ai.providers.gemini.models.text.default', 'gemini-flash-lite-latest');
         }
 
         if (filled(config('ai.providers.openai.key'))) {

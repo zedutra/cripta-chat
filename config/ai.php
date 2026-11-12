@@ -106,9 +106,9 @@ return [
             'url' => env('GEMINI_URL', 'https://generativelanguage.googleapis.com/v1beta/'),
             'models' => [
                 'text' => [
-                    'default' => env('GEMINI_TEXT_MODEL', 'gemini-2.5-flash'),
-                    'smartest' => env('GEMINI_TEXT_MODEL', 'gemini-2.5-flash'),
-                    'cheapest' => env('GEMINI_TEXT_CHEAPEST_MODEL', 'gemini-2.5-flash'),
+                    'default' => env('GEMINI_TEXT_MODEL', 'gemini-flash-lite-latest'),
+                    'smartest' => env('GEMINI_TEXT_MODEL', 'gemini-flash-lite-latest'),
+                    'cheapest' => env('GEMINI_TEXT_CHEAPEST_MODEL', 'gemini-flash-lite-latest'),
                 ],
             ],
         ],
